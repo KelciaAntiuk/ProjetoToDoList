@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
  import NewTeamModal from './components/NewTeamModal';
-// import NewPeopleModal from './components/NewPeopleModal';
+ import NewPeopleModal from './components/NewPeopleModal';
 // import ViewTeams from './components/ViewTeams';
 // import TaskMap from './components/TaskMap';
 // import NewTaskModal from './components/NewTaskModal'
@@ -11,7 +11,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   // const [profileMenuOpen, setProfileMenuOpen] = useState(false);
    const [showNewTeamModal, setShowNewTeamModal] = useState(false);
-  // const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
+  const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
   // const [showNewTaskModal, setShowNewTaskModal] = useState(false);
    const [teams, setTeams] = useState([]);
    const [showViewTeams, setShowViewTeams] = useState(false);
@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     fetchTeam();
     // fetchPeople();
-    // console.log('oiiiiii', teams);
+     console.log('APP', teams);
   }, []);
 
   const fetchTeam = async () => {
@@ -54,10 +54,10 @@ function App() {
     setShowNewTeamModal(false);
   };
 
-  // const handleAddPeople = (personName) => {
-  //   console.log('Novo time adicionado:', personName);
-  //   setShowNewPeopleModal(false);
-  // };
+  const handleAddPeople = (personName) => {
+    console.log('Novo time adicionado:', personName);
+    setShowNewPeopleModal(false);
+  };
   // const handleAddTask = (taskName) => {
   //   console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
   //   setShowNewTaskModal(false);
@@ -97,7 +97,7 @@ function App() {
             <a style={{
               color: 'white'
             }}
-              //onClick={() => setShowNewPeopleModal(true)}
+              onClick={() => setShowNewPeopleModal(true)}
               >Add new people</a>
           </li>
           <li>
@@ -202,13 +202,13 @@ function App() {
           onAddTeam={handleAddTeam}
           style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 9999 }}
         />
-        {/* <NewPeopleModal
+        <NewPeopleModal
           showModal={showNewPeopleModal}
           onClose={() => setShowNewPeopleModal(false)}
           onAddPerson={handleAddPeople}
           teams={teams}
         />
-          <NewTaskModal
+          {/* <NewTaskModal
           showModal={showNewTaskModal}
           onClose={() => setShowNewTaskModal(false)}
           onAddTask={handleAddTask}
