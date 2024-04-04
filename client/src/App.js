@@ -4,7 +4,7 @@ import './App.css';
  import NewTeamModal from './components/NewTeamModal';
  import NewPeopleModal from './components/NewPeopleModal';
  import ViewTeams from './components/ViewTeams';
-// import TaskMap from './components/TaskMap';
+import TaskCard from './components/TaskCard';
  import NewTaskModal from './components/NewTaskModal'
 
 function App() {
@@ -277,7 +277,7 @@ function App() {
           Importante
         </p>
       </div>
-      {/* <TaskMap /> */}
+       <TaskCard /> 
     </div >
   );
 }
