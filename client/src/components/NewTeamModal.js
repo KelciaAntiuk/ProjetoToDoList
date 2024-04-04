@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
+function AddNewTeamModal({ showModal, onClose, onAddTeam, onUpdateTeams }) {
   const [teamName, setTeamName] = useState('');
 
   const addTeam = async (event) => {
@@ -9,15 +9,20 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
     try {
       const team = { title: teamName };
 
-      await fetch('http://localhost:3333/team', {
+      const response = await fetch('http://localhost:3333/team', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(team),
       });
 
-      setTeamName('');
-      onAddTeam(teamName); // Chamar a função onAddTeam com o nome do time
-      onClose(); // Fechar o modal após adicionar o time
+      if (response.ok) {
+        setTeamName('');
+        onAddTeam(teamName); // Chamar a função onAddTeam com o nome do time
+        onUpdateTeams(); // Atualizar a lista de times
+        onClose(); // Fechar o modal após adicionar o time
+      } else {
+        console.error('Failed to add team');
+      }
     } catch (error) {
       console.error('Error adding team:', error);
     }
@@ -49,10 +54,11 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
             maxWidth: '400px',
             width: '90%',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra
+            position: 'relative', // Adicionando posição relativa para posicionamento absoluto do botão de fechar
           }}
         >
-          <span
-            className="close"
+          <button
+            className="close-button"
             onClick={onClose}
             style={{
               position: 'absolute',
@@ -60,10 +66,13 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
               right: '8px',
               fontSize: '20px',
               cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+              padding: '0',
             }}
           >
             &times;
-          </span>
+          </button>
           <h2
             style={{
               textAlign: 'center',

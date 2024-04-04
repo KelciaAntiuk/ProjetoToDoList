@@ -17,22 +17,23 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
     try {
       // Converte selectedTeam para um número inteiro
       const teamId = parseInt(selectedTeam, 10);
-  
+    
       const people = { title: peopleName, team_id: teamId };
-  
+    
       await fetch('http://localhost:3333/people', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(people),
       });
-  
+    
       setPeopleName('');
       setSelectedTeam('');
       onAddPeople(peopleName); // Chamar a função onAddPeople com o nome do time
-      onClose(); // Fechar o modal após adicionar o time
+      onClose(); // Fechar o modal após adicionar a pessoa
     } catch (error) {
       console.error('Error adding people:', error);
     }
+    
   };
   
 
@@ -67,10 +68,11 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
             maxWidth: '400px',
             width: '90%',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra
+            position: 'relative', // Adicionando posição relativa para posicionamento absoluto do botão de fechar
           }}
         >
-          <span
-            className="close"
+          <button
+            className="close-button"
             onClick={onClose}
             style={{
               position: 'absolute',
@@ -78,10 +80,13 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
               right: '8px',
               fontSize: '20px',
               cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+              padding: '0',
             }}
           >
             &times;
-          </span>
+          </button>
           <h2
             style={{
               textAlign: 'center',
