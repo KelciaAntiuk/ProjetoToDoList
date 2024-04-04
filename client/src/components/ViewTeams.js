@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import ViewDetails from './ViewDetails';
 
 function ViewTeams({ onClose }) {
   const [teams, setTeams] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState(null); // Estado para armazenar o time selecionado
 
   useEffect(() => {
     fetchTeam();
@@ -15,6 +17,10 @@ function ViewTeams({ onClose }) {
     } catch (error) {
       console.error('Error fetching team:', error);
     }
+  }
+
+  const handleTeamClick = (team) => {
+    setSelectedTeam(team); // Define o time selecionado quando clicado
   }
 
   return (
@@ -65,13 +71,16 @@ function ViewTeams({ onClose }) {
                 backgroundColor: '#f0f0f0',
                 borderRadius: '4px',
                 marginBottom: '10px',
+                cursor: 'pointer', // Adicione o cursor pointer para indicar que é clicável
               }}
+              onClick={() => handleTeamClick(team)} // Adicione o evento de clique com o time
             >
               {team.title}
             </li>
           ))}
         </ul>
       </div>
+      {selectedTeam && <ViewDetails team={selectedTeam} onClose={() => setSelectedTeam(null)} />} {/* Renderiza ViewDetails apenas se um time estiver selecionado */}
     </div>
   );
 }
