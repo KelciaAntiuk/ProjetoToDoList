@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
  import NewTeamModal from './components/NewTeamModal';
  import NewPeopleModal from './components/NewPeopleModal';
-// import ViewTeams from './components/ViewTeams';
+ import ViewTeams from './components/ViewTeams';
 // import TaskMap from './components/TaskMap';
 // import NewTaskModal from './components/NewTaskModal'
 
@@ -86,28 +86,54 @@ function App() {
       >
         {/* Conteúdo do menu */}
         <ul style={{ listStyle: "none", padding: 0 }}>
-          <li>
-            <a style={{
-              color: 'white'
-            }}
-              onClick={() => setShowNewTeamModal(true)}
-              >Add new team</a>
-          </li>
-          <li>
-            <a style={{
-              color: 'white'
-            }}
-              onClick={() => setShowNewPeopleModal(true)}
-              >Add new people</a>
-          </li>
-          <li>
-            <a style={{
-              color: 'white'
-            }}
-              //onClick={handleViewTeams}
-              >View Teams</a>
-          </li>
-        </ul>
+  <li style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.3)', transition: 'border-color 0.3s ease' }}>
+    <a
+      style={{
+        color: 'white',
+        textDecoration: 'none',
+        padding: '10px',
+        display: 'block',
+        transition: 'color 0.3s ease',
+        cursor:'pointer'
+      }}
+      onClick={() => setShowNewTeamModal(true)}
+    >
+      Adicionar Time
+    </a>
+  </li>
+  <li style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.3)', transition: 'border-color 0.3s ease' }}>
+    <a
+      style={{
+        color: 'white',
+        textDecoration: 'none',
+        padding: '10px',
+        display: 'block',
+        transition: 'color 0.3s ease',
+        cursor:'pointer'
+      }}
+      onClick={() => setShowNewPeopleModal(true)}
+    >
+      Adicionar Pessoa
+    </a>
+  </li>
+  <li style={{ transition: 'border-color 0.3s ease' }}>
+    <a
+      style={{
+        color: 'white',
+        textDecoration: 'none',
+        padding: '10px',
+        display: 'block',
+        transition: 'color 0.3s ease',
+        cursor:'pointer'
+      }}
+      onClick={handleViewTeams}
+    >
+      Ver Times
+    </a>
+  </li>
+</ul>
+
+
       </div>
 
       {/* Conteúdo principal */}
@@ -214,7 +240,7 @@ function App() {
           onAddTask={handleAddTask}
           people={people}
         /> */}
-        {/* {showViewTeams && <ViewTeams />}  */}
+           {showViewTeams && <ViewTeams onClose={() => setShowViewTeams(false)} />}
       </div>
       <div
         className='taskBoard'
