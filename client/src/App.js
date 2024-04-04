@@ -5,14 +5,14 @@ import './App.css';
  import NewPeopleModal from './components/NewPeopleModal';
  import ViewTeams from './components/ViewTeams';
 // import TaskMap from './components/TaskMap';
-// import NewTaskModal from './components/NewTaskModal'
+ import NewTaskModal from './components/NewTaskModal'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   // const [profileMenuOpen, setProfileMenuOpen] = useState(false);
    const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
-  // const [showNewTaskModal, setShowNewTaskModal] = useState(false);
+   const [showNewTaskModal, setShowNewTaskModal] = useState(false);
    const [teams, setTeams] = useState([]);
    const [showViewTeams, setShowViewTeams] = useState(false);
    const [people, setPeople] = useState([]);
@@ -58,10 +58,10 @@ function App() {
     console.log('Novo time adicionado:', personName);
     setShowNewPeopleModal(false);
   };
-  // const handleAddTask = (taskName) => {
-  //   console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
-  //   setShowNewTaskModal(false);
-  // };
+  const handleAddTask = (taskName) => {
+    console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
+    setShowNewTaskModal(false);
+  };
   
 
   const handleViewTeams = () => {
@@ -215,7 +215,7 @@ function App() {
                 margin: 0,
                 color: 'purple' // Removendo margem padrão do parágrafo
               }}
-              //onClick={() => setShowNewTaskModal(true)}
+              onClick={() => setShowNewTaskModal(true)}
             >
               Adicionar Task
             </p>
@@ -234,12 +234,12 @@ function App() {
           onAddPerson={handleAddPeople}
           teams={teams}
         />
-          {/* <NewTaskModal
+          <NewTaskModal
           showModal={showNewTaskModal}
           onClose={() => setShowNewTaskModal(false)}
           onAddTask={handleAddTask}
           people={people}
-        /> */}
+        />
            {showViewTeams && <ViewTeams onClose={() => setShowViewTeams(false)} />}
       </div>
       <div
