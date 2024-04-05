@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ViewTasks from './ViewTasks';
+import People from './People';
 
 function TaskCard() {
   const [tasks, setTasks] = useState([]);
@@ -145,6 +146,7 @@ function TaskCard() {
         </div>
       ))}
       {selectedTask && <ViewTasks tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
+      {selectedTask && <People tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
     </div>
   );
 }
