@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 function NewTaskModal({ showModal, onClose, onCreateTask }) {
   const [title, setTitle] = useState('');
   const [selectedPeople, setSelectedPeople] = useState(0);
-  const [selectedTeamId, setSelectedTeamId] = useState(0); // Adicione o estado para armazenar o team_id
+  const [selectedTeamId, setSelectedTeamId] = useState(0);
   const [people, setPeople] = useState([]);
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
@@ -27,10 +27,9 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
     const selectedPersonId = parseInt(e.target.value, 10);
     setSelectedPeople(selectedPersonId);
 
-    // Find the selected person from the people list
     const selectedPerson = people.find(person => person.id === selectedPersonId);
     if (selectedPerson) {
-      setSelectedTeamId(selectedPerson.team_id); // Set selected team_id
+      setSelectedTeamId(selectedPerson.team_id);
     }
   };
 
@@ -40,7 +39,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
     try {
       const task = {
         title: title,
-        team_id: selectedTeamId, // Use selectedTeamId
+        team_id: selectedTeamId,
         people_id: selectedPeople,
         date: date,
         description: description,
@@ -55,6 +54,14 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
 
       if (response.ok) {
         onCreateTask(task);
+        // Limpar os campos do formulário
+        setTitle('');
+        setSelectedPeople(0);
+        setSelectedTeamId(0);
+        setDate('');
+        setDescription('');
+        setPriority('');
+        // Fechar o modal
         onClose();
       } else {
         console.error('Failed to create task');
@@ -78,7 +85,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semi-transparente
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}
       >
         <div
@@ -89,8 +96,8 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
             padding: '20px',
             maxWidth: '400px',
             width: '90%',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra
-            position: 'relative', // Adicionando posição relativa para posicionamento absoluto do botão de fechar
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            position: 'relative',
           }}
         >
           <button
@@ -143,7 +150,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
             <select
               id="peopleSelect"
               value={selectedPeople}
-              onChange={handlePersonChange} // Use a função de manipulação de mudança de pessoa
+              onChange={handlePersonChange}
               required
               style={{
                 width: '100%',
@@ -154,7 +161,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
                 boxSizing: 'border-box',
               }}
             >
-              <option value={0}>Selecione uma pessoa</option> {/* Valor padrão */}
+              <option value={0}>Selecione uma pessoa</option>
               {people.map((person) => (
                 <option key={person.id} value={person.id}>
                   {person.title}
