@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import ViewTasks from './ViewTasks';
 
 function TaskCard() {
   const [tasks, setTasks] = useState([]);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     fetchTasks();
   }, []);
+  const handleTaskClick = (task) => {
+    setSelectedTask(task); // Define o time selecionado quando clicado
+  }
 
   const verifyIconStatus = (status) =>{
     switch(status){
@@ -90,8 +95,10 @@ function TaskCard() {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          alignItems: 'center', // Para centralizar verticalmente as informações
-        }}>
+          alignItems: 'center',
+           // Para centralizar verticalmente as informações
+        }}
+        onClick={() => handleTaskClick(task)}>
           <p>{task.title}</p>
           <div style={{
             display: 'flex',
@@ -127,6 +134,7 @@ function TaskCard() {
                 fontFamily: 'Material Symbols Outlined',
                 fontSize: '25px'
               }}
+             // onClick={() => People()}
             >
               visibility
             </p>
@@ -136,6 +144,7 @@ function TaskCard() {
 
         </div>
       ))}
+      {selectedTask && <ViewTasks tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
     </div>
   );
 }
