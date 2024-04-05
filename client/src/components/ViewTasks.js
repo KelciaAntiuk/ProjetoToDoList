@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
-  //const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    console.log('tasks', tasks)
-  }, []);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate(); // Retorna o dia do mês (1 a 31)
@@ -13,6 +8,15 @@ function ViewTasks({ tasks, onClose }) {
     return `${day} ${month}`;
   };
 
+  const handleEdit = () => {
+    // Lógica para editar a tarefa
+    console.log('Editar tarefa:', tasks.id);
+  };
+
+  const handleDelete = () => {
+    // Lógica para excluir a tarefa
+    console.log('Excluir tarefa:', tasks.id);
+  };
 
   return (
     <div
@@ -51,11 +55,14 @@ function ViewTasks({ tasks, onClose }) {
             &times;
           </span>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Task</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontFamily: 'Arial, sans-serif', color: '#333' }}>Task</h2>
         <p
           style={{
             textAlign: 'center',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
           }}
         >
           {tasks.title}
@@ -63,37 +70,66 @@ function ViewTasks({ tasks, onClose }) {
         <p
           style={{
             textAlign: 'center',
-            fontWeight: 'bold'
+            //fontWeight: 'bold',
+            margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
           }}
         >
-          {tasks.description}
+          Descrição:
         </p>
         <p
           style={{
             textAlign: 'center',
-            fontWeight: 'bold'
+            //fontWeight: 'bold',
+            margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
+          }}
+        >
+          {tasks.description}
+        </p>
+        <hr></hr>
+        <p
+          style={{
+            //textAlign: 'center',
+            //fontWeight: 'bold',
+            //margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
+            marginLeft:'-30em'
           }}
         >
           Data Final: {formatDate(tasks.date)}
         </p>
         <p
           style={{
-            textAlign: 'center',
-            fontWeight: 'bold'
+            // textAlign: 'center',
+            // fontWeight: 'bold',
+           // margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
+            marginLeft:'-30.7em'
           }}
         >
           Status: {tasks.status}
         </p>
         <p
           style={{
-            textAlign: 'center',
-            fontWeight: 'bold'
+            // textAlign: 'center',
+            // fontWeight: 'bold',
+           // margin: '10px 0',
+            fontFamily: 'Arial, sans-serif',
+            color: '#555',
+            marginLeft:'-31.2em'
           }}
         >
           Prioridade: {tasks.priority}
         </p>
-        
-
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button onClick={handleEdit} style={{ marginRight: '10px', fontFamily: 'Arial, sans-serif', backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Editar</button>
+          <button onClick={handleDelete} style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f44336', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Excluir</button>
+        </div>
       </div>
     </div>
   );
