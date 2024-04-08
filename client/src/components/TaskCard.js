@@ -5,6 +5,7 @@ import People from './People';
 function TaskCard() {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedPeople, setSelectedPeople] = useState(null);
 
   useEffect(() => {
     fetchTasks();
@@ -12,13 +13,16 @@ function TaskCard() {
   const handleTaskClick = (task) => {
     setSelectedTask(task); // Define o time selecionado quando clicado
   }
+  const handlePeopleClick = (task) => {
+    setSelectedPeople(task); // Define o time selecionado quando clicado
+  }
 
-  const verifyIconStatus = (status) =>{
-    switch(status){
+  const verifyIconStatus = (status) => {
+    switch (status) {
       case 'pendente':
         return 'cancel';
-        case 'concluido':
-          return 'check_circle';
+      case 'concluido':
+        return 'check_circle';
     }
   }
 
@@ -97,47 +101,54 @@ function TaskCard() {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-           // Para centralizar verticalmente as informações
+          // Para centralizar verticalmente as informações
         }}
-        onClick={() => handleTaskClick(task)}>
+          onClick={() => handleTaskClick(task)}>
           <p>{task.title}</p>
           <div style={{
             display: 'flex',
           }}>
             <p style={{
               marginRight: '44px',
-              marginTop:'27px'
+              marginTop: '27px'
             }}> {formatDate(task.date)}</p>
 
             <p style={{
               marginRight: '55px',
-              fontSize:'30px',
-              marginTop:'20px',
+              fontSize: '30px',
+              marginTop: '20px',
               fontFamily: 'Material Symbols Outlined',
-            }}> 
-            {verifyIconStatus(task.status)}
+            }}>
+              {verifyIconStatus(task.status)}
             </p>
-          
+
             <p style={{
               marginRight: '65px',
-              marginTop:'20px',
+              marginTop: '20px',
               fontFamily: 'Material Symbols Outlined',
-              fontSize:'30px',
+              fontSize: '30px',
               color: verifyColor(task.priority)
             }}
             >flag_circle
             </p>
 
-            
+
             <p
               style={{
                 marginRight: '26px',
                 fontFamily: 'Material Symbols Outlined',
                 fontSize: '25px'
               }}
-             // onClick={() => People()}
+
             >
-              visibility
+              <span
+                onClick={(e) => {
+                  e.stopPropagation(); // Evita que o evento se propague para o contêiner pai
+                  handlePeopleClick(task); // Chama handlePeopleClick apenas ao clicar no ícone
+                }}
+              >
+                visibility
+              </span>
             </p>
           </div>
 
@@ -146,7 +157,7 @@ function TaskCard() {
         </div>
       ))}
       {selectedTask && <ViewTasks tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
-      {selectedTask && <People tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
+      {selectedPeople && <People tasks={selectedPeople} onClose={() => setSelectedPeople(null)} />}
     </div>
   );
 }
