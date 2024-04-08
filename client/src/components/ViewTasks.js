@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
-  const [isChecked, setIsChecked] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -10,7 +10,29 @@ function ViewTasks({ tasks, onClose }) {
     return `${day} ${month}`;
   };
 
+  const updateTask = async () => {
+    try {
+      const statusN = isChecked ? 'concluido' : 'pendente';
 
+      // Convertendo a data para o formato ISO sem considerar o fuso horário
+      const formattedDate = new Date(tasks.date).toISOString().split('T')[0];
+
+      await fetch(`http://localhost:3333/tasks/${tasks.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...tasks, date: formattedDate, status: statusN }),
+      });
+
+      onClose(); // Fechar o modal após a atualização
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+
+  };
 
   return (
     <div
@@ -40,33 +62,16 @@ function ViewTasks({ tasks, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          style={{
-            textAlign: 'right',
-            marginBottom: '10px'
-          }}
-        >
+        <div style={{ textAlign: 'right', marginBottom: '10px' }}>
           <span
             className="close"
             onClick={onClose}
-            style={{
-              cursor: 'pointer',
-              fontSize: '24px'
-            }}
+            style={{ cursor: 'pointer', fontSize: '24px' }}
           >
             &times;
           </span>
         </div>
-        <h2
-          style={{
-            textAlign: 'center',
-            marginBottom: '20px',
-            fontFamily: 'Arial, sans-serif',
-            color: '#333'
-          }}
-        >
-          Task
-        </h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontFamily: 'Arial, sans-serif', color: '#333' }}>Task</h2>
         <p
           style={{
             textAlign: 'center',
@@ -88,7 +93,7 @@ function ViewTasks({ tasks, onClose }) {
         >
           Descrição: {tasks.description}
         </p>
-        <hr></hr>
+        <hr />
         <p
           style={{
             fontFamily: 'Arial, sans-serif',
@@ -98,48 +103,20 @@ function ViewTasks({ tasks, onClose }) {
         >
           Data Final: {formatDate(tasks.date)}
         </p>
-        <label
-          style={{
-            fontFamily: 'Arial, sans-serif',
-            color: '#555',
-            marginRight: '10px'
-          }}
-        >
+        <label style={{ fontFamily: 'Arial, sans-serif', color: '#555', marginRight: '10px' }}>
           Concluído:
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={setIsChecked(true)}
-            style={{
-              marginLeft: '5px'
-            }}
+            onChange={handleCheckboxChange}
+            style={{ marginLeft: '5px' }}
           />
         </label>
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: '20px'
-          }}
-        >
-
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <button
-            onClick={handleEdit}
+            onClick={updateTask}
             style={{
               marginRight: '10px',
-              fontFamily: 'Arial, sans-serif',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            Editar
-          </button>
-          <button
-            onClick={handleDelete}
-            style={{
               fontFamily: 'Arial, sans-serif',
               backgroundColor: '#f44336',
               color: 'white',
@@ -149,8 +126,9 @@ function ViewTasks({ tasks, onClose }) {
               cursor: 'pointer'
             }}
           >
-            Excluir
+            Fechar
           </button>
+          {/* <button onClick={onClose} style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f44336', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Fechar</button> */}
         </div>
       </div>
     </div>
