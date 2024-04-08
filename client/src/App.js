@@ -1,25 +1,25 @@
 
 import React, { useState, useEffect } from 'react';
-import './App.css';
- import NewTeamModal from './components/NewTeamModal';
- import NewPeopleModal from './components/NewPeopleModal';
- import ViewTeams from './components/ViewTeams';
+import NewTeamModal from './components/NewTeamModal';
+import NewPeopleModal from './components/NewPeopleModal';
+import ViewTeams from './components/ViewTeams';
 import TaskCard from './components/TaskCard';
- import NewTaskModal from './components/NewTaskModal'
+import NewTaskModal from './components/NewTaskModal';
+import './App.css';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-   const [showNewTeamModal, setShowNewTeamModal] = useState(false);
+  const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
-   const [showNewTaskModal, setShowNewTaskModal] = useState(false);
-   const [teams, setTeams] = useState([]);
-   const [showViewTeams, setShowViewTeams] = useState(false);
-   const [people, setPeople] = useState([]);
+  const [showNewTaskModal, setShowNewTaskModal] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [showViewTeams, setShowViewTeams] = useState(false);
+  const [people, setPeople] = useState([]);
 
   useEffect(() => {
     fetchTeam();
     // fetchPeople();
-     console.log('APP', teams);
+    console.log('APP', teams);
   }, []);
 
   const fetchTeam = async () => {
@@ -32,17 +32,6 @@ function App() {
       console.error('Error fetching team:', error);
     }
   }
-
-  // const fetchPeople = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:3333/people');
-  //     const people = await response.json();
-  //     setPeople(people);
-  //     console.log(people);
-  //   } catch (error) {
-  //     console.error('Error fetching team:', error);
-  //   }
-  // }
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -61,7 +50,7 @@ function App() {
     console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
     setShowNewTaskModal(false);
   };
-  
+
 
   const handleViewTeams = () => {
     setShowViewTeams(true);
@@ -84,58 +73,74 @@ function App() {
         }}
       >
         {/* Conteúdo do menu */}
-        <ul style={{ listStyle: "none", padding: 0 }}>
-  <li style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.3)', transition: 'border-color 0.3s ease' }}>
-    <a
-      style={{
-        color: 'white',
-        textDecoration: 'none',
-        padding: '10px',
-        display: 'block',
-        transition: 'color 0.3s ease',
-        cursor:'pointer'
-      }}
-      onClick={() => setShowNewTeamModal(true)}
-    >
-      Adicionar Time
-    </a>
-  </li>
-  <li style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.3)', transition: 'border-color 0.3s ease' }}>
-    <a
-      style={{
-        color: 'white',
-        textDecoration: 'none',
-        padding: '10px',
-        display: 'block',
-        transition: 'color 0.3s ease',
-        cursor:'pointer'
-      }}
-      onClick={() => setShowNewPeopleModal(true)}
-    >
-      Adicionar Pessoa
-    </a>
-  </li>
-  <li style={{ transition: 'border-color 0.3s ease' }}>
-    <a
-      style={{
-        color: 'white',
-        textDecoration: 'none',
-        padding: '10px',
-        display: 'block',
-        transition: 'color 0.3s ease',
-        cursor:'pointer'
-      }}
-      onClick={handleViewTeams}
-    >
-      Ver Times
-    </a>
-  </li>
-</ul>
-
-
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0
+          }}
+        >
+          <li
+            style={{
+              borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+              transition: 'border-color 0.3s ease'
+            }}
+          >
+            <a
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                padding: '10px',
+                display: 'block',
+                transition: 'color 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onClick={() => setShowNewTeamModal(true)}
+            >
+              Adicionar Time
+            </a>
+          </li>
+          <li
+            style={{
+              borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+              transition: 'border-color 0.3s ease'
+            }}
+          >
+            <a
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                padding: '10px',
+                display: 'block',
+                transition: 'color 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onClick={() => setShowNewPeopleModal(true)}
+            >
+              Adicionar Pessoa
+            </a>
+          </li>
+          <li
+            style={{
+              transition: 'border-color 0.3s ease'
+            }}
+          >
+            <a
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                padding: '10px',
+                display: 'block',
+                transition: 'color 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onClick={handleViewTeams}
+            >
+              Ver Times
+            </a>
+          </li>
+        </ul>
       </div>
 
-      {/* Conteúdo principal */}
       <div
         style={{
           marginLeft: menuOpen ? "250px" : "0",
@@ -185,7 +190,6 @@ function App() {
               marginRight: '20px',
             }}
           >
-
           </div>
 
           <div
@@ -225,7 +229,14 @@ function App() {
           showModal={showNewTeamModal}
           onClose={() => setShowNewTeamModal(false)}
           onAddTeam={handleAddTeam}
-          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 9999 }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 9999
+          }}
         />
         <NewPeopleModal
           showModal={showNewPeopleModal}
@@ -233,13 +244,17 @@ function App() {
           onAddPerson={handleAddPeople}
           teams={teams}
         />
-          <NewTaskModal
+        <NewTaskModal
           showModal={showNewTaskModal}
           onClose={() => setShowNewTaskModal(false)}
           onAddTask={handleAddTask}
           people={people}
         />
-           {showViewTeams && <ViewTeams onClose={() => setShowViewTeams(false)} />}
+        {showViewTeams &&
+          <ViewTeams
+            onClose={() => setShowViewTeams(false)}
+          />
+        }
       </div>
       <div
         className='taskBoard'
@@ -276,7 +291,7 @@ function App() {
           Importante
         </p>
       </div>
-       <TaskCard /> 
+      <TaskCard />
     </div >
   );
 }

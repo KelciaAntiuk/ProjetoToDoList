@@ -103,13 +103,22 @@ function ViewTasks({ tasks, onClose }) {
         >
           Data Final: {formatDate(tasks.date)}
         </p>
-        <label style={{ fontFamily: 'Arial, sans-serif', color: '#555', marginRight: '10px' }}>
+        <label 
+        style={{ 
+          fontFamily: 'Arial, sans-serif', 
+          color: '#555', 
+          marginRight: '10px' 
+          }}
+          >
           Concluído:
           <input
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
-            style={{ marginLeft: '5px' }}
+            style={{ 
+              marginLeft: '5px',
+              cursor:'pointer'
+             }}
           />
         </label>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>

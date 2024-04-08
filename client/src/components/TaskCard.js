@@ -123,6 +123,7 @@ function TaskCard() {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
+            cursor:'pointer'
           }}
           onClick={() => handleTaskClick(task)}>
           <p>
@@ -157,7 +158,7 @@ function TaskCard() {
                 marginTop: '20px',
                 fontFamily: 'Material Symbols Outlined',
                 fontSize: '30px',
-                color: verifyColor(task.priority)
+                color: verifyColor(task.priority),
               }}
             >
               flag_circle
@@ -167,8 +168,9 @@ function TaskCard() {
               style={{
                 marginRight: '26px',
                 fontFamily: 'Material Symbols Outlined',
-                fontSize: '25px'
-              }}
+                fontSize: '25px',
+                cursor:'pointer',
+              }}  
             >
               <span
                 onClick={(e) => {
