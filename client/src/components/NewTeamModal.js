@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-function AddNewTeamModal({ showModal, onClose, onAddTeam, onUpdateTeams }) {
+function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
+
   const [teamName, setTeamName] = useState('');
 
   const addTeam = async (event) => {
-    event.preventDefault();
-
+    event.preventDefault(); //evitar que a pagina seja recarregada apos o envio do formulário
     try {
       const team = { title: teamName };
-
       const response = await fetch('http://localhost:3333/team', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -18,7 +17,6 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam, onUpdateTeams }) {
       if (response.ok) {
         setTeamName('');
         onAddTeam(teamName); // Chamar a função onAddTeam com o nome do time
-        onUpdateTeams(); // Atualizar a lista de times
         onClose(); // Fechar o modal após adicionar o time
       } else {
         console.error('Failed to add team');
@@ -54,7 +52,7 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam, onUpdateTeams }) {
             maxWidth: '400px',
             width: '90%',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra
-            position: 'relative', // Adicionando posição relativa para posicionamento absoluto do botão de fechar
+            position: 'relative',
           }}
         >
           <button
@@ -82,8 +80,15 @@ function AddNewTeamModal({ showModal, onClose, onAddTeam, onUpdateTeams }) {
           >
             Adicionar Novo Time
           </h2>
-          <form onSubmit={addTeam}>
-            <label htmlFor="teamName" style={{ marginBottom: '10px' }}>
+          <form
+            onSubmit={addTeam}
+          >
+            <label
+              className="teamName"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Nome do Time:
             </label>
             <input

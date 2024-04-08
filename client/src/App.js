@@ -9,7 +9,6 @@ import TaskCard from './components/TaskCard';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  // const [profileMenuOpen, setProfileMenuOpen] = useState(false);
    const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
    const [showNewTaskModal, setShowNewTaskModal] = useState(false);

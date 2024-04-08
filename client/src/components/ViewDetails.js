@@ -45,21 +45,54 @@ function ViewDetails({ team, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ textAlign: 'right', marginBottom: '10px' }}>
+        <div
+          style={{
+            textAlign: 'right',
+            marginBottom: '10px'
+          }}
+        >
           <span
             className="close"
             onClick={onClose}
-            style={{ cursor: 'pointer', fontSize: '24px' }}
+            style={{
+              cursor: 'pointer',
+              fontSize: '24px'
+            }}
           >
             &times;
           </span>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Pessoas do Time</h2>
-        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{team.title}</p>
-        <ul style={{ listStyle: 'none', padding: '0' }}>
+        <h2
+          style={{
+            textAlign: 'center',
+            marginBottom: '20px'
+          }}
+        >
+          Pessoas do Time
+        </h2>
+        <p
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold'
+          }}
+        >
+          {team.title}
+        </p>
+        <ul
+          style={{
+            listStyle: 'none',
+            padding: '0'
+          }}
+        >
           {people.map((person) => (
             team.id === person.team_id && (
-              <li key={person.id} style={{ textAlign: 'center', marginBottom: '10px' }}>
+              <li
+                key={person.id}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '10px'
+                }}
+              >
                 {person.title}
               </li>
             )

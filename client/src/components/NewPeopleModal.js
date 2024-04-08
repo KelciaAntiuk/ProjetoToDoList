@@ -1,46 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
 function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
+  
+  const [selectedTeam, setSelectedTeam] = useState(0);
   const [peopleName, setPeopleName] = useState('');
-  const [selectedTeam, setSelectedTeam] = useState(0); // Inicializado como 0
-  const [loading, setLoading] = useState(true); // Adiciona estado para controlar o carregamento
+  
 
   useEffect(() => {
     console.log('peoplemodal', teams);
-    setLoading(false); // Marca o carregamento como concluído
   }, []);
 
   const addPeople = async (event) => {
     event.preventDefault();
-    console.log('oieoieoieoie', peopleName, selectedTeam);
-  
+    console.log('NewPeople', peopleName, selectedTeam);
+
     try {
       // Converte selectedTeam para um número inteiro
       const teamId = parseInt(selectedTeam, 10);
-    
       const people = { title: peopleName, team_id: teamId };
-    
+
       await fetch('http://localhost:3333/people', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(people),
       });
-    
+
       setPeopleName('');
       setSelectedTeam('');
-      onAddPeople(peopleName); // Chamar a função onAddPeople com o nome do time
-      onClose(); // Fechar o modal após adicionar a pessoa
+      onAddPeople(peopleName);
+      onClose();
     } catch (error) {
       console.error('Error adding people:', error);
     }
-    
-  };
-  
 
-  // Exibe um indicador de carregamento enquanto os times estão sendo buscados
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  };
 
   return (
     showModal && (
@@ -68,7 +61,7 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
             maxWidth: '400px',
             width: '90%',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra
-            position: 'relative', // Adicionando posição relativa para posicionamento absoluto do botão de fechar
+            position: 'relative',
           }}
         >
           <button
@@ -96,8 +89,15 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
           >
             Adicionar Nova Pessoa
           </h2>
-          <form onSubmit={addPeople}>
-            <label htmlFor="peopleName" style={{ marginBottom: '10px' }}>
+          <form
+            onSubmit={addPeople}
+          >
+            <label
+              className="peopleName"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Nome da Pessoa:
             </label>
             <input
@@ -115,7 +115,12 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
                 boxSizing: 'border-box',
               }}
             />
-            <label htmlFor="teamSelect" style={{ marginBottom: '10px' }}>
+            <label
+              className="teamSelect"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Selecione o Time:
             </label>
             <select

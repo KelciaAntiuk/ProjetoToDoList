@@ -3,18 +3,20 @@ import ViewTasks from './ViewTasks';
 import People from './People';
 
 function TaskCard() {
-  const [tasks, setTasks] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null);
   const [selectedPeople, setSelectedPeople] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     fetchTasks();
   }, []);
+
   const handleTaskClick = (task) => {
-    setSelectedTask(task); // Define o time selecionado quando clicado
+    setSelectedTask(task); // Define o task selecionado quando clicado
   }
+
   const handlePeopleClick = (task) => {
-    setSelectedPeople(task); // Define o time selecionado quando clicado
+    setSelectedPeople(task);
   }
 
   const verifyIconStatus = (status) => {
@@ -62,7 +64,6 @@ function TaskCard() {
   return (
     <div className="task-card">
       <div style={{
-        //border: '1px solid black',
         borderRadius: '5px',
         margin: '1rem',
         padding: '1rem',
@@ -72,66 +73,95 @@ function TaskCard() {
         alignItems: 'center',
         marginBottom: '-20px', // Para centralizar verticalmente as informações
       }}>
-        <p>Titulo</p>
-        <div style={{
-          display: 'flex',
-        }}>
-          <p style={{
-            marginRight: '25px'
-          }}> Data Final</p>
-          <p style={{
-            marginRight: '25px'
-          }}> Status</p>
-          <p style={{
-            marginRight: '25px'
-          }}>Prioridade</p>
-          <p style={{
-            marginRight: '25px'
-          }}>Pessoa</p>
+        <p>
+          Titulo
+        </p>
+        <div
+          style={{
+            display: 'flex',
+          }}>
+          <p
+            style={{
+              marginRight: '25px'
+            }}
+          >
+            Data Final
+          </p>
+          <p
+            style={{
+              marginRight: '25px'
+            }}
+          >
+            Status
+          </p>
+          <p
+            style={{
+              marginRight: '25px'
+            }}
+          >
+            Prioridade
+          </p>
+          <p
+            style={{
+              marginRight: '25px'
+            }}
+          >
+            Pessoa
+          </p>
         </div>
       </div>
 
       {tasks.map(task => (
-        <div key={task.id} style={{
-          border: '1px solid black',
-          borderRadius: '5px',
-          margin: '1rem',
-          padding: '1rem',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          // Para centralizar verticalmente as informações
-        }}
-          onClick={() => handleTaskClick(task)}>
-          <p>{task.title}</p>
-          <div style={{
+        <div
+          key={task.id}
+          style={{
+            border: '1px solid black',
+            borderRadius: '5px',
+            margin: '1rem',
+            padding: '1rem',
             display: 'flex',
-          }}>
-            <p style={{
-              marginRight: '44px',
-              marginTop: '27px'
-            }}> {formatDate(task.date)}</p>
-
-            <p style={{
-              marginRight: '55px',
-              fontSize: '30px',
-              marginTop: '20px',
-              fontFamily: 'Material Symbols Outlined',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+          onClick={() => handleTaskClick(task)}>
+          <p>
+            {task.title}
+          </p>
+          <div
+            style={{
+              display: 'flex',
             }}>
+            <p
+              style={{
+                marginRight: '44px',
+                marginTop: '27px'
+              }}
+            >
+              {formatDate(task.date)}
+            </p>
+
+            <p
+              style={{
+                marginRight: '55px',
+                fontSize: '30px',
+                marginTop: '20px',
+                fontFamily: 'Material Symbols Outlined',
+              }}>
               {verifyIconStatus(task.status)}
             </p>
 
-            <p style={{
-              marginRight: '65px',
-              marginTop: '20px',
-              fontFamily: 'Material Symbols Outlined',
-              fontSize: '30px',
-              color: verifyColor(task.priority)
-            }}
-            >flag_circle
+            <p
+              style={{
+                marginRight: '65px',
+                marginTop: '20px',
+                fontFamily: 'Material Symbols Outlined',
+                fontSize: '30px',
+                color: verifyColor(task.priority)
+              }}
+            >
+              flag_circle
             </p>
-
 
             <p
               style={{
@@ -139,7 +169,6 @@ function TaskCard() {
                 fontFamily: 'Material Symbols Outlined',
                 fontSize: '25px'
               }}
-
             >
               <span
                 onClick={(e) => {
@@ -151,13 +180,18 @@ function TaskCard() {
               </span>
             </p>
           </div>
-
-
-
         </div>
       ))}
-      {selectedTask && <ViewTasks tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
-      {selectedPeople && <People tasks={selectedPeople} onClose={() => setSelectedPeople(null)} />}
+      {selectedTask &&
+        <ViewTasks
+          tasks={selectedTask}
+          onClose={() => setSelectedTask(null)}
+        />}
+      {selectedPeople &&
+        <People
+          tasks={selectedPeople}
+          onClose={() => setSelectedPeople(null)}
+        />}
     </div>
   );
 }

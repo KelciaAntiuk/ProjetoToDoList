@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
+  const [isChecked, setIsChecked] = useState(null);
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = date.getDate(); // Retorna o dia do mês (1 a 31)
-    const month = date.toLocaleString('default', { month: 'short' }); // Retorna o mês abreviado
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });
     return `${day} ${month}`;
   };
 
-  const handleEdit = () => {
-    // Lógica para editar a tarefa
-    console.log('Editar tarefa:', tasks.id);
-  };
 
-  const handleDelete = () => {
-    // Lógica para excluir a tarefa
-    console.log('Excluir tarefa:', tasks.id);
-  };
 
   return (
     <div
@@ -46,16 +40,33 @@ function ViewTasks({ tasks, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ textAlign: 'right', marginBottom: '10px' }}>
+        <div
+          style={{
+            textAlign: 'right',
+            marginBottom: '10px'
+          }}
+        >
           <span
             className="close"
             onClick={onClose}
-            style={{ cursor: 'pointer', fontSize: '24px' }}
+            style={{
+              cursor: 'pointer',
+              fontSize: '24px'
+            }}
           >
             &times;
           </span>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontFamily: 'Arial, sans-serif', color: '#333' }}>Task</h2>
+        <h2
+          style={{
+            textAlign: 'center',
+            marginBottom: '20px',
+            fontFamily: 'Arial, sans-serif',
+            color: '#333'
+          }}
+        >
+          Task
+        </h2>
         <p
           style={{
             textAlign: 'center',
@@ -70,65 +81,76 @@ function ViewTasks({ tasks, onClose }) {
         <p
           style={{
             textAlign: 'center',
-            //fontWeight: 'bold',
             margin: '10px 0',
             fontFamily: 'Arial, sans-serif',
             color: '#555',
           }}
         >
-          Descrição:
-        </p>
-        <p
-          style={{
-            textAlign: 'center',
-            //fontWeight: 'bold',
-            margin: '10px 0',
-            fontFamily: 'Arial, sans-serif',
-            color: '#555',
-          }}
-        >
-          {tasks.description}
+          Descrição: {tasks.description}
         </p>
         <hr></hr>
         <p
           style={{
-            //textAlign: 'center',
-            //fontWeight: 'bold',
-            //margin: '10px 0',
             fontFamily: 'Arial, sans-serif',
             color: '#555',
-            marginLeft:'-30em'
+            marginLeft: '-30em'
           }}
         >
           Data Final: {formatDate(tasks.date)}
         </p>
-        <p
+        <label
           style={{
-            // textAlign: 'center',
-            // fontWeight: 'bold',
-           // margin: '10px 0',
             fontFamily: 'Arial, sans-serif',
             color: '#555',
-            marginLeft:'-30.7em'
+            marginRight: '10px'
           }}
         >
-          Status: {tasks.status}
-        </p>
-        <p
+          Concluído:
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={setIsChecked(true)}
+            style={{
+              marginLeft: '5px'
+            }}
+          />
+        </label>
+        <div
           style={{
-            // textAlign: 'center',
-            // fontWeight: 'bold',
-           // margin: '10px 0',
-            fontFamily: 'Arial, sans-serif',
-            color: '#555',
-            marginLeft:'-31.2em'
+            textAlign: 'center',
+            marginTop: '20px'
           }}
         >
-          Prioridade: {tasks.priority}
-        </p>
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <button onClick={handleEdit} style={{ marginRight: '10px', fontFamily: 'Arial, sans-serif', backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Editar</button>
-          <button onClick={handleDelete} style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f44336', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Excluir</button>
+
+          <button
+            onClick={handleEdit}
+            style={{
+              marginRight: '10px',
+              fontFamily: 'Arial, sans-serif',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Editar
+          </button>
+          <button
+            onClick={handleDelete}
+            style={{
+              fontFamily: 'Arial, sans-serif',
+              backgroundColor: '#f44336',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Excluir
+          </button>
         </div>
       </div>
     </div>

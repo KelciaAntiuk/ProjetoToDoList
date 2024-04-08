@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function People({ tasks, onClose }) {
+
   const [People, setPeople] = useState([]);
+
   useEffect(() => {
     fetchPeople();
   }, []);
 
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = date.getDate(); // Retorna o dia do mês (1 a 31)
+    const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'short' }); // Retorna o mês abreviado
     return `${day} ${month}`;
   };
@@ -24,8 +25,6 @@ function People({ tasks, onClose }) {
       console.error('Error fetching team:', error);
     }
   }
-
-
 
   return (
     <div
@@ -59,12 +58,24 @@ function People({ tasks, onClose }) {
           <span
             className="close"
             onClick={onClose}
-            style={{ cursor: 'pointer', fontSize: '24px' }}
+            style={{
+              cursor: 'pointer',
+              fontSize: '24px'
+            }}
           >
             &times;
           </span>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontFamily: 'Arial, sans-serif', color: '#333' }}>Task</h2>
+        <h2
+          style={{
+            textAlign: 'center',
+            marginBottom: '20px',
+            fontFamily: 'Arial, sans-serif',
+            color: '#333'
+          }}
+        >
+          Task
+        </h2>
         <p
           style={{
             textAlign: 'center',
@@ -79,24 +90,21 @@ function People({ tasks, onClose }) {
         <p
           style={{
             textAlign: 'center',
-            //fontWeight: 'bold',
             margin: '10px 0',
             fontFamily: 'Arial, sans-serif',
             color: '#555',
           }}
         >
-
           {People.map(person => (
-            <div key={person.id}>
+            <div
+              key={person.id}
+            >
               {person.id === tasks.people_id && (
                 <p>{person.title}</p>
               )}
             </div>
           ))}
-
-
         </p>
-
       </div>
     </div>
   );

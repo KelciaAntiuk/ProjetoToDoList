@@ -19,10 +19,11 @@ const deleteTask = async (id) => {
 };
  
 const updateTask = async (id, task) => {
-  const { title } = task;
-  const code = 'UPDATE tasks SET title = ? WHERE id = ?';
-  await connection.execute(code, [title, id]);
+  const { title, description, priority, people_id, team_id, date, status } = task;
+  const code = 'UPDATE tasks SET title = ?, description = ?, priority = ?, people_id = ?, team_id = ?, date = ?, status = ? WHERE id = ?';
+  await connection.execute(code, [title, description, priority, people_id, team_id, date, status, id]);
 };
+
 
 module.exports = {
   getAll,

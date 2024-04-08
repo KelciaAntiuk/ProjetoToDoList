@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 function NewTaskModal({ showModal, onClose, onCreateTask }) {
-  const [title, setTitle] = useState('');
+
   const [selectedPeople, setSelectedPeople] = useState(0);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
-  const [people, setPeople] = useState([]);
-  const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('');
+  const [people, setPeople] = useState([]);
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -19,7 +20,6 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
         console.error('Error fetching people:', error);
       }
     };
-
     fetchPeople();
   }, []);
 
@@ -61,7 +61,6 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
         setDate('');
         setDescription('');
         setPriority('');
-        // Fechar o modal
         onClose();
       } else {
         console.error('Failed to create task');
@@ -125,8 +124,15 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
           >
             Nova Tarefa
           </h2>
-          <form onSubmit={createTask}>
-            <label htmlFor="title" style={{ marginBottom: '10px' }}>
+          <form
+            onSubmit={createTask}
+          >
+            <label
+              className="title"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Título:
             </label>
             <input
@@ -144,7 +150,12 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
                 boxSizing: 'border-box',
               }}
             />
-            <label htmlFor="peopleSelect" style={{ marginBottom: '10px' }}>
+            <label
+              className="peopleSelect"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Selecione a Pessoa:
             </label>
             <select
@@ -161,14 +172,26 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
                 boxSizing: 'border-box',
               }}
             >
-              <option value={0}>Selecione uma pessoa</option>
+              <option
+                value={0}
+              >
+                Selecione uma pessoa
+              </option>
               {people.map((person) => (
-                <option key={person.id} value={person.id}>
+                <option
+                  key={person.id}
+                  value={person.id}
+                >
                   {person.title}
                 </option>
               ))}
             </select>
-            <label htmlFor="date" style={{ marginBottom: '10px' }}>
+            <label
+              className="date"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Data:
             </label>
             <input
@@ -186,7 +209,12 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
                 boxSizing: 'border-box',
               }}
             />
-            <label htmlFor="description" style={{ marginBottom: '10px' }}>
+            <label
+              className="description"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Descrição:
             </label>
             <textarea
@@ -204,7 +232,12 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
                 resize: 'vertical',
               }}
             ></textarea>
-            <label htmlFor="priority" style={{ marginBottom: '10px' }}>
+            <label
+              className="priority"
+              style={{
+                marginBottom: '10px'
+              }}
+            >
               Prioridade:
             </label>
             <select
