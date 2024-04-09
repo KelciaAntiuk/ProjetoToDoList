@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(tasks.title);
+  const [editedDescription, setEditedDescription] = useState(tasks.description);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -13,16 +16,13 @@ function ViewTasks({ tasks, onClose }) {
   const updateTask = async () => {
     try {
       const statusN = isChecked ? 'concluido' : 'pendente';
-
       // Convertendo a data para o formato ISO sem considerar o fuso horário
       const formattedDate = new Date(tasks.date).toISOString().split('T')[0];
-
       await fetch(`http://localhost:3333/tasks/${tasks.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...tasks, date: formattedDate, status: statusN }),
       });
-
       onClose(); // Fechar o modal após a atualização
     } catch (error) {
       console.error('Error updating task:', error);
@@ -31,6 +31,35 @@ function ViewTasks({ tasks, onClose }) {
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    // Revertendo as alterações nos campos editados
+    setEditedTitle(tasks.title);
+    setEditedDescription(tasks.description);
+
+  };
+
+  const handleSaveEdit = async () => {
+    console.log('tasksss', editedDescription, editedTitle)
+    try {
+      const formattedDate = new Date(tasks.date).toISOString().split('T')[0];
+      await fetch(`http://localhost:3333/tasks/${tasks.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...tasks, title: editedTitle, description: editedDescription, date: formattedDate }),
+      });
+
+      // fetchTasks();
+      setIsEditing(false); // Limpa o estado editingTask após a atualização
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
 
   };
 
@@ -71,74 +100,124 @@ function ViewTasks({ tasks, onClose }) {
             &times;
           </span>
         </div>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontFamily: 'Arial, sans-serif', color: '#333' }}>Task</h2>
-        <p
+        <h2
           style={{
             textAlign: 'center',
-            fontWeight: 'bold',
-            margin: '10px 0',
+            marginBottom: '20px',
             fontFamily: 'Arial, sans-serif',
-            color: '#555',
+            color: '#333'
           }}
         >
-          {tasks.title}
-        </p>
-        <p
-          style={{
-            textAlign: 'center',
-            margin: '10px 0',
-            fontFamily: 'Arial, sans-serif',
-            color: '#555',
-          }}
-        >
-          Descrição: {tasks.description}
-        </p>
-        <hr />
-        <p
-          style={{
-            fontFamily: 'Arial, sans-serif',
-            color: '#555',
-            marginLeft: '-30em'
-          }}
-        >
-          Data Final: {formatDate(tasks.date)}
-        </p>
-        <label 
-        style={{ 
-          fontFamily: 'Arial, sans-serif', 
-          color: '#555', 
-          marginRight: '10px' 
-          }}
-          >
-          Concluído:
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-            style={{ 
-              marginLeft: '5px',
-              cursor:'pointer'
-             }}
-          />
-        </label>
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <button
-            onClick={updateTask}
-            style={{
-              marginRight: '10px',
-              fontFamily: 'Arial, sans-serif',
-              backgroundColor: '#f44336',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            Fechar
-          </button>
-          {/* <button onClick={onClose} style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f44336', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Fechar</button> */}
-        </div>
+          Task
+        </h2>
+        {isEditing ? (
+          <form>
+            <label>
+              Title:
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)} />
+            </label>
+            <label>
+              Description:
+              <textarea
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)} />
+            </label>
+            <button onClick={handleSaveEdit}>Save</button>
+            <button onClick={handleCancelEdit}>Cancel</button>
+          </form>
+        ) : (
+          <>
+            <p
+              style={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                margin: '10px 0',
+                fontFamily: 'Arial, sans-serif',
+                color: '#555',
+              }}
+            >
+              {tasks.title}
+            </p>
+            <p
+              style={{
+                textAlign: 'center',
+                margin: '10px 0',
+                fontFamily: 'Arial, sans-serif',
+                color: '#555',
+              }}
+            >
+              Descrição: {tasks.description}
+            </p>
+            <hr />
+            <p
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                color: '#555',
+                marginLeft: '-30em'
+              }}
+            >
+              Data Final: {formatDate(tasks.date)}
+            </p>
+            <label
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                color: '#555',
+                marginRight: '10px'
+              }}
+            >
+              Concluído:
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                style={{
+                  marginLeft: '5px',
+                  cursor: 'pointer'
+                }}
+              />
+            </label>
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: '20px'
+              }}
+            >
+              <button
+                onClick={updateTask}
+                style={{
+                  marginRight: '10px',
+                  fontFamily: 'Arial, sans-serif',
+                  backgroundColor: '#f44336',
+                  color: 'white',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Fechar
+              </button>
+              <button
+                onClick={handleEditClick}
+                style={{
+                  marginRight: '10px',
+                  fontFamily: 'Arial, sans-serif',
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Editar
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
