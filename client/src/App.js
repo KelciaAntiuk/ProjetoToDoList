@@ -5,6 +5,7 @@ import NewPeopleModal from './components/NewPeopleModal';
 import ViewTeams from './components/ViewTeams';
 import TaskCard from './components/TaskCard';
 import NewTaskModal from './components/NewTaskModal';
+import TaskImportante from './components/TaskImportante';
 import './App.css';
 
 function App() {
@@ -15,12 +16,36 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [showViewTeams, setShowViewTeams] = useState(false);
   const [people, setPeople] = useState([]);
+  const [card, setCard] = useState(true);
+  const [importante, setImportante] = useState(true);
 
   useEffect(() => {
     fetchTeam();
     // fetchPeople();
     console.log('APP', teams);
   }, []);
+
+  const verifyColor = (card) => {
+    switch (card) {
+      case true:
+        return '1px solid black';
+      case 'false':
+        return ' ';
+      default:
+        return 'black';
+    }
+  };
+  const verifyColor2 = (importante) => {
+    switch (importante) {
+      case true:
+        return '1px solid black';
+      case 'false':
+        return ' ';
+      default:
+        return 'black';
+    }
+  };
+
 
   const fetchTeam = async () => {
     try {
@@ -54,6 +79,14 @@ function App() {
 
   const handleViewTeams = () => {
     setShowViewTeams(true);
+  }
+  const clickCard = () => {
+    setCard(false);
+    setImportante(true);
+  }
+  const clickTudo = () => {
+    setCard(true);
+    setImportante(false);
   }
 
   return (
@@ -278,20 +311,26 @@ function App() {
           style={{
             marginLeft: '27px',
             marginRight: '27px',
-            color: 'purple'
+            color: 'purple',
+            borderBottom: verifyColor(card),
           }}
+          onClick={() => clickTudo()}
         >
           Tudo
         </p>
         <p
           style={{
-            color: 'purple'
+            color: 'purple',
+            borderBottom: verifyColor(importante),
           }}
+          onClick={()=> clickCard()}
         >
           Importante
         </p>
       </div>
-      <TaskCard />
+      {card && <TaskCard />}
+      {importante && <TaskImportante/>}
+
     </div >
   );
 }
