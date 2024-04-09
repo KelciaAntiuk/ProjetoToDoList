@@ -16,14 +16,13 @@ function ViewTasks({ tasks, onClose }) {
   const updateTask = async () => {
     try {
       const statusN = isChecked ? 'concluido' : 'pendente';
-      // Convertendo a data para o formato ISO sem considerar o fuso horário
       const formattedDate = new Date(tasks.date).toISOString().split('T')[0];
       await fetch(`http://localhost:3333/tasks/${tasks.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...tasks, date: formattedDate, status: statusN }),
       });
-      onClose(); // Fechar o modal após a atualização
+      onClose();
     } catch (error) {
       console.error('Error updating task:', error);
     }
@@ -39,14 +38,11 @@ function ViewTasks({ tasks, onClose }) {
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    // Revertendo as alterações nos campos editados
     setEditedTitle(tasks.title);
     setEditedDescription(tasks.description);
-
   };
 
   const handleSaveEdit = async () => {
-    console.log('tasksss', editedDescription, editedTitle)
     try {
       const formattedDate = new Date(tasks.date).toISOString().split('T')[0];
       await fetch(`http://localhost:3333/tasks/${tasks.id}`, {
@@ -55,12 +51,10 @@ function ViewTasks({ tasks, onClose }) {
         body: JSON.stringify({ ...tasks, title: editedTitle, description: editedDescription, date: formattedDate }),
       });
 
-      // fetchTasks();
-      setIsEditing(false); // Limpa o estado editingTask após a atualização
+      setIsEditing(false);
     } catch (error) {
       console.error('Error updating task:', error);
     }
-
   };
 
   return (
@@ -112,33 +106,40 @@ function ViewTasks({ tasks, onClose }) {
         </h2>
         {isEditing ? (
           <form>
-            <label>
-              Title:
+            <div style={{ marginBottom: '10px' }}>
+              <label>Title:</label>
               <input
                 type="text"
                 value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)} />
-            </label>
-            <label>
-              Description:
+                onChange={(e) => setEditedTitle(e.target.value)}
+                style={{ width: '100%', marginTop: '5px' }} />
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <label>Description:</label>
               <textarea
                 value={editedDescription}
-                onChange={(e) => setEditedDescription(e.target.value)} />
-            </label>
-            <button onClick={handleSaveEdit}>Save</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+                onChange={(e) => setEditedDescription(e.target.value)}
+                style={{ width: '100%', marginTop: '5px' }} />
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <button
+                onClick={handleSaveEdit}
+                style={{
+                  marginRight: '10px'
+                }}
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancelEdit}
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         ) : (
           <>
-            <p
-              style={{
-                textAlign: 'center',
-                fontWeight: 'bold',
-                margin: '10px 0',
-                fontFamily: 'Arial, sans-serif',
-                color: '#555',
-              }}
-            >
+            <p style={{ textAlign: 'center', fontWeight: 'bold', margin: '10px 0', fontFamily: 'Arial, sans-serif', color: '#555' }}>
               {tasks.title}
             </p>
             <p
@@ -146,7 +147,7 @@ function ViewTasks({ tasks, onClose }) {
                 textAlign: 'center',
                 margin: '10px 0',
                 fontFamily: 'Arial, sans-serif',
-                color: '#555',
+                color: '#555'
               }}
             >
               Descrição: {tasks.description}
@@ -173,10 +174,7 @@ function ViewTasks({ tasks, onClose }) {
                 type="checkbox"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
-                style={{
-                  marginLeft: '5px',
-                  cursor: 'pointer'
-                }}
+                style={{ marginLeft: '5px', cursor: 'pointer' }}
               />
             </label>
             <div
