@@ -231,10 +231,11 @@ function ViewTasks({ tasks, onClose }) {
             <div>
               <p
                 style={{
-                  marginRight: '65px',
-                  marginTop: '20px',
+                  marginRight: '65em',
+                  marginTop: '-1.2em',
                   fontFamily: 'Material Symbols Outlined',
                   fontSize: '30px',
+                  cursor:'pointer'
 
                 }}
                 onClick={() => deleteTask(tasks.id)}
