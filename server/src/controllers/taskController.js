@@ -12,7 +12,7 @@ const createTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   const { id } = req.params;
-  await tasksModels.deleteTask(id);
+  await taskModels.deleteTask(id);
   return res.status(204).json();
 };
 

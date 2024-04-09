@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -6,12 +6,26 @@ function ViewTasks({ tasks, onClose }) {
   const [editedTitle, setEditedTitle] = useState(tasks.title);
   const [editedDescription, setEditedDescription] = useState(tasks.description);
 
+
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'short' });
     return `${day} ${month}`;
   };
+
+  const deleteTask = async (id) => {
+    try {
+      await fetch(`http://localhost:3333/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      onClose();
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  }
 
   const updateTask = async () => {
     try {
@@ -213,6 +227,20 @@ function ViewTasks({ tasks, onClose }) {
               >
                 Editar
               </button>
+            </div>
+            <div>
+              <p
+                style={{
+                  marginRight: '65px',
+                  marginTop: '20px',
+                  fontFamily: 'Material Symbols Outlined',
+                  fontSize: '30px',
+
+                }}
+                onClick={() => deleteTask(tasks.id)}
+              >
+                delete
+              </p>
             </div>
           </>
         )}
