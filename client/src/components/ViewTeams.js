@@ -9,6 +9,18 @@ function ViewTeams({ onClose }) {
     fetchTeam();
   }, []);
 
+  const deleteTeam = async (id) => {
+    try {
+      await fetch(`http://localhost:3333/team/${id}`, {
+        method: 'DELETE',
+      });
+
+      onClose();
+    } catch (error) {
+      console.error('Error deleting team:', error);
+    }
+  }
+
   const fetchTeam = async () => {
     try {
       const response = await fetch('http://localhost:3333/team');
@@ -76,11 +88,28 @@ function ViewTeams({ onClose }) {
               onClick={() => handleTeamClick(team)} // Adicione o evento de clique com o time
             >
               {team.title}
+              <p
+                style={{
+                  marginRight: '65em',
+                  marginTop: '-1em',
+                  fontFamily: 'Material Symbols Outlined',
+                  fontSize: '20px',
+                  cursor:'pointer'
+
+                }}
+                onClick={() => deleteTeam(team.id)}
+              >
+                delete
+              </p>
             </li>
+            
           ))}
         </ul>
       </div>
-      {selectedTeam && <ViewDetails team={selectedTeam} onClose={() => setSelectedTeam(null)} />} {/* Renderiza ViewDetails apenas se um time estiver selecionado */}
+      {selectedTeam && 
+      <ViewDetails 
+      team={selectedTeam} 
+      onClose={() => setSelectedTeam(null)} />} {/* Renderiza ViewDetails apenas se um time estiver selecionado */}
     </div>
   );
 }

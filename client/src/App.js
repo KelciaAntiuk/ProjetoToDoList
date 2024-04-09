@@ -313,6 +313,7 @@ function App() {
             marginRight: '27px',
             color: 'purple',
             borderBottom: verifyColor(card),
+            cursor:'pointer'
           }}
           onClick={() => clickTudo()}
         >
@@ -322,6 +323,7 @@ function App() {
           style={{
             color: 'purple',
             borderBottom: verifyColor(importante),
+            cursor:'pointer'
           }}
           onClick={()=> clickCard()}
         >
