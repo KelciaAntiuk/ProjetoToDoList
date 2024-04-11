@@ -182,8 +182,16 @@ function TaskCard() {
         )
       ))}
 
-      {selectedTask && <ViewTasks tasks={selectedTask} onClose={() => setSelectedTask(null)} />}
-      {selectedPeople && <People tasks={selectedPeople} onClose={() => setSelectedPeople(null)} />}
+      {selectedTask && 
+      <ViewTasks 
+      tasks={selectedTask} 
+      onClose={() => setSelectedTask(null)}
+       />}
+      {selectedPeople && 
+      <People 
+      tasks={selectedPeople} 
+      onClose={() => setSelectedPeople(null)} 
+      />}
     </div>
   );
 }
