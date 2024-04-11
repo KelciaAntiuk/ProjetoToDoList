@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function ViewTasks({ tasks, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(tasks.title);
   const [editedDescription, setEditedDescription] = useState(tasks.description);
-
-  
-
-
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

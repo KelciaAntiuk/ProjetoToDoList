@@ -33,7 +33,7 @@ const deleteTeam = async (id) => {
 };
 
 const updateTeam = async (id, team) => {
-  const {title, status} = team;
+  const {title} = team;
 
   const code = 'UPDATE team SET title = ? WHERE id = ? '
   const [updatedTeam] = await connection.execute(code, [title, id]);

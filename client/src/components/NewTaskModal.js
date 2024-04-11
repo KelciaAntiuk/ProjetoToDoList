@@ -11,17 +11,18 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
   const [date, setDate] = useState('');
 
   useEffect(() => {
-    const fetchPeople = async () => {
-      try {
-        const response = await fetch('http://localhost:3333/people');
-        const peopleData = await response.json();
-        setPeople(peopleData);
-      } catch (error) {
-        console.error('Error fetching people:', error);
-      }
-    };
+ 
     fetchPeople();
   }, []);
+  const fetchPeople = async () => {
+    try {
+      const response = await fetch('http://localhost:3333/people');
+      const peopleData = await response.json();
+      setPeople(peopleData);
+    } catch (error) {
+      console.error('Error fetching people:', error);
+    }
+  };
 
   const handlePersonChange = (e) => {
     const selectedPersonId = parseInt(e.target.value, 10);
@@ -52,6 +53,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
         body: JSON.stringify(task),
       });
 
+
       if (response.ok) {
         onCreateTask(task);
         // Limpar os campos do formulário
@@ -65,6 +67,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
       } else {
         console.error('Failed to create task');
       }
+      onClose();
     } catch (error) {
       console.error('Error creating task:', error);
     }
