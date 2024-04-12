@@ -6,6 +6,7 @@ import ViewTeams from './components/ViewTeams';
 import TaskCard from './components/TaskCard';
 import NewTaskModal from './components/NewTaskModal';
 import TaskImportante from './components/TaskImportante';
+import Time from './components/Time';
 import './App.css';
 
 function App() {
@@ -17,8 +18,9 @@ function App() {
   const [showViewTeams, setShowViewTeams] = useState(false);
   const [people, setPeople] = useState([]);
   const [card, setCard] = useState(true);
-  const [importante, setImportante] = useState(true);
+  const [importante, setImportante] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [time, setTime] = useState(false);
 
   useEffect(() => {
     fetchTeam();
@@ -96,9 +98,16 @@ function App() {
   const clickCard = () => {
     setCard(false);
     setImportante(true);
+    setTime(false);
   }
   const clickTudo = () => {
     setCard(true);
+    setImportante(false);
+    setTime(false);
+  }
+  const clickTime = () => {
+    setCard(false);
+    setTime(true);
     setImportante(false);
   }
 
@@ -342,9 +351,22 @@ function App() {
         >
           Importante
         </p>
+
+        <p
+          style={{
+            color: 'purple',
+            borderBottom: verifyColor(time),
+            cursor:'pointer',
+            marginLeft: '27px'
+          }}
+          onClick={()=> clickTime()}
+        >
+          Times
+        </p>
       </div>
       {card && <TaskCard />}
       {importante && <TaskImportante/>}
+      {time && <Time/>}
 
     </div >
   );

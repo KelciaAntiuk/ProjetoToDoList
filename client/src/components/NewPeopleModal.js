@@ -137,7 +137,7 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
                 boxSizing: 'border-box',
               }}
             >
-              <option value={0}>Selecione um time</option> {/* Valor padrão */}
+              <option value={0}>Selecione um time</option> 
               {teams.map((team) => (
                 <option key={team.id} value={team.id} >
                   {team.title}
