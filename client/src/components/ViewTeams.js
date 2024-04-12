@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ViewDetails from './ViewDetails';
 
 function ViewTeams({ onClose }) {
   const [teams, setTeams] = useState([]);
@@ -9,6 +10,11 @@ function ViewTeams({ onClose }) {
   const [editPerson, setEditPerson] = useState("");
 
 
+
+
+  useEffect(() => {
+    fetchPeople();
+  }, []);
 
   useEffect(() => {
     fetchTeam();
@@ -152,9 +158,17 @@ function ViewTeams({ onClose }) {
                 marginBottom: '10px',
                 cursor: 'pointer'
               }}
-              onClick={() => handleTeamClick(team)}
+            //onClick={() => handleTeamClick(team)}
             >
-              {team.title}
+              <span
+                onClick={(e) => {
+                  e.stopPropagation(); // Evita que o evento se propague para o contêiner pai
+                  handleTeamClick(team); // Chama handlePeopleClick apenas ao clicar no ícone
+                }}
+              >
+                {team.title}
+              </span>
+
               <p
                 style={{
                   marginRight: '65em',
@@ -268,9 +282,16 @@ function ViewTeams({ onClose }) {
                               fontSize: '20px',
                               cursor: 'pointer'
                             }}
-                            onClick={() => handleEditClickPerson(person)}
                           >
-                            edit
+                            <span
+                              onClick={(e) => {
+                                e.stopPropagation(); // Evita que o evento se propague para o contêiner pai
+                                handleEditClickPerson(person); // Chama handlePeopleClick apenas ao clicar no ícone
+                              }}
+                            >
+                              edit
+                            </span>
+
                           </p>
                         </>
                       )}
@@ -315,6 +336,11 @@ function ViewTeams({ onClose }) {
           </div>
         )}
       </div>
+      {selectedTeam &&
+        <ViewDetails
+          team={selectedTeam}
+          onClose={() => setSelectedTeam(null)}
+        />}
     </div>
   );
 }
