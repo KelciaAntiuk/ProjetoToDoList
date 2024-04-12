@@ -6,6 +6,7 @@ function ViewTasks({ tasks, onClose }) {
   const [editedTitle, setEditedTitle] = useState(tasks.title);
   const [editedDescription, setEditedDescription] = useState(tasks.description);
 
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -97,13 +98,20 @@ function ViewTasks({ tasks, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ textAlign: 'right', marginBottom: '10px' }}>
+        <div style={{ 
+          textAlign: 'right', 
+          marginBottom: '10px'
+           }}
+           >
           <span
             className="close"
             onClick={onClose}
-            style={{ cursor: 'pointer', fontSize: '24px' }}
+            style={{ 
+              cursor: 'pointer', 
+              fontSize: '24px' 
+            }}
           >
-            &times;
+            
           </span>
         </div>
         <h2
@@ -118,22 +126,42 @@ function ViewTasks({ tasks, onClose }) {
         </h2>
         {isEditing ? (
           <form>
-            <div style={{ marginBottom: '10px' }}>
+            <div 
+            style={{ 
+              marginBottom: '10px' 
+              }}
+              >
               <label>Title:</label>
               <input
                 type="text"
                 value={editedTitle}
                 onChange={(e) => setEditedTitle(e.target.value)}
-                style={{ width: '100%', marginTop: '5px' }} />
+                style={{ 
+                  width: '100%', 
+                  marginTop: '5px' 
+                  }} 
+                  />
             </div>
-            <div style={{ marginBottom: '10px' }}>
+            <div 
+            style={{ 
+              marginBottom: '10px' 
+              }}
+              >
               <label>Description:</label>
               <textarea
                 value={editedDescription}
                 onChange={(e) => setEditedDescription(e.target.value)}
-                style={{ width: '100%', marginTop: '5px' }} />
+                style={{ 
+                  width: '100%', 
+                  marginTop: '5px'
+                   }} 
+                   />
             </div>
-            <div style={{ textAlign: 'center' }}>
+            <div
+             style={{ 
+              textAlign: 'center' 
+              }}
+              >
               <button
                 onClick={handleSaveEdit}
                 style={{
@@ -151,7 +179,15 @@ function ViewTasks({ tasks, onClose }) {
           </form>
         ) : (
           <>
-            <p style={{ textAlign: 'center', fontWeight: 'bold', margin: '10px 0', fontFamily: 'Arial, sans-serif', color: '#555' }}>
+            <p
+              style={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                margin: '10px 0',
+                fontFamily: 'Arial, sans-serif',
+                color: '#555'
+              }}
+            >
               {tasks.title}
             </p>
             <p
@@ -174,6 +210,9 @@ function ViewTasks({ tasks, onClose }) {
             >
               Data Final: {formatDate(tasks.date)}
             </p>
+
+            {tasks.status === 'pendente' &&(
+
             <label
               style={{
                 fontFamily: 'Arial, sans-serif',
@@ -189,6 +228,10 @@ function ViewTasks({ tasks, onClose }) {
                 style={{ marginLeft: '5px', cursor: 'pointer' }}
               />
             </label>
+            )}
+
+
+
             <div
               style={{
                 textAlign: 'center',
@@ -233,7 +276,7 @@ function ViewTasks({ tasks, onClose }) {
                   marginTop: '-1.2em',
                   fontFamily: 'Material Symbols Outlined',
                   fontSize: '30px',
-                  cursor:'pointer'
+                  cursor: 'pointer'
 
                 }}
                 onClick={() => deleteTask(tasks.id)}
