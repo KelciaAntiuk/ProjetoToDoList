@@ -7,13 +7,19 @@ function TaskCard() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [tasks, setTasks] = useState([]);
 
+  const handleTaskClick = (task) => {
+    setSelectedTask(task); // Define o task selecionado quando clicado
+  }
+
+  useEffect(() => {
+    fetchTasks();
+  }, [handleTaskClick, selectedTask]);
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  const handleTaskClick = (task) => {
-    setSelectedTask(task); // Define o task selecionado quando clicado
-  }
+ 
 
   const handlePeopleClick = (task) => {
     setSelectedPeople(task);

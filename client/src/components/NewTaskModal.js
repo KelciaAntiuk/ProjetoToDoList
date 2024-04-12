@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function NewTaskModal({ showModal, onClose, onCreateTask }) {
+function NewTaskModal({ showModal, onClose, onAddTask }) {
 
   const [selectedPeople, setSelectedPeople] = useState(0);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
@@ -55,7 +55,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
 
 
       if (response.ok) {
-        onCreateTask(task);
+        onAddTask(task);
         // Limpar os campos do formulário
         setTitle('');
         setSelectedPeople(0);
@@ -63,7 +63,7 @@ function NewTaskModal({ showModal, onClose, onCreateTask }) {
         setDate('');
         setDescription('');
         setPriority('');
-        onClose();
+        
       } else {
         console.error('Failed to create task');
       }

@@ -18,6 +18,7 @@ function App() {
   const [people, setPeople] = useState([]);
   const [card, setCard] = useState(true);
   const [importante, setImportante] = useState(true);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     fetchTeam();
@@ -58,6 +59,17 @@ function App() {
     }
   }
 
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('http://localhost:3333/tasks');
+      const tasks = await response.json();
+      setTasks(tasks);
+      console.log(tasks);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  }
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   }
@@ -74,6 +86,7 @@ function App() {
   const handleAddTask = (taskName) => {
     console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
     setShowNewTaskModal(false);
+    fetchTasks();
   };
 
 
