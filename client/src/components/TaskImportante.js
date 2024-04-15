@@ -11,11 +11,11 @@ function TaskCard() {
     fetchTasks();
   }, []);
 
-  const handleTaskClick = (task) => {
+  const handleTaskEdit = (task) => {
     setSelectedTask(task);
   };
 
-  const handlePeopleClick = (task) => {
+  const handlePeopleByTeam = (task) => {
     setSelectedPeople(task);
   };
 
@@ -127,7 +127,7 @@ function TaskCard() {
               alignItems: 'center',
               cursor: 'pointer'
             }}
-            onClick={() => handleTaskClick(task)}
+            onClick={() => handleTaskEdit(task)}
           >
             <p>{task.title}</p>
             <div
@@ -174,7 +174,7 @@ function TaskCard() {
               >
                 <span onClick={(e) => {
                   e.stopPropagation();
-                  handlePeopleClick(task);
+                  handlePeopleByTeam(task);
                 }}>visibility</span>
               </p>
             </div>

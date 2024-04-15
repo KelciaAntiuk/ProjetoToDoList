@@ -10,40 +10,10 @@ function Time() {
     fetchTeams();
   }, []);
 
-  const handleTeamClick = (team) => {
+  const handleViewTeam = (team) => {
     setSelectedTeam(team);
   };
 
-  const verifyIconStatus = (status) => {
-    switch (status) {
-      case 'pendente':
-        return 'cancel';
-      case 'concluido':
-        return 'check_circle';
-      default:
-        return '';
-    }
-  };
-
-  const verifyColor = (priority) => {
-    switch (priority) {
-      case 'high':
-        return 'red';
-      case 'medium':
-        return '#FFD700';
-      case 'low':
-        return 'green';
-      default:
-        return 'black';
-    }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'short' });
-    return `${day} ${month}`;
-  };
 
   const fetchTeams = async () => {
     try {
@@ -109,7 +79,7 @@ function Time() {
                  <span
                 onClick={(e) => {
                   e.stopPropagation(); // Evita que o evento se propague para o contêiner pai
-                  handleTeamClick(team); // Chama handlePeopleClick apenas ao clicar no ícone
+                  handleViewTeam(team); // Chama handlePeopleClick apenas ao clicar no ícone
                 }}
               >
                 Ver Tasks

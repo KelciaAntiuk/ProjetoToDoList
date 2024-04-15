@@ -39,17 +39,6 @@ function App() {
     }
   };
 
-  const verifyColor2 = (importante) => {
-    switch (importante) {
-      case true:
-        return '1px solid black';
-      case 'false':
-        return ' ';
-      default:
-        return 'black';
-    }
-  };
-
   const fetchTeam = async () => {
     try {
       const response = await fetch('http://localhost:3333/team');

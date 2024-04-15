@@ -11,9 +11,9 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
   const [date, setDate] = useState('');
 
   useEffect(() => {
- 
     fetchPeople();
   }, []);
+
   const fetchPeople = async () => {
     try {
       const response = await fetch('http://localhost:3333/people');
@@ -24,7 +24,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
     }
   };
 
-  const handlePersonChange = (e) => {
+  const selectPersons = (e) => {
     const selectedPersonId = parseInt(e.target.value, 10);
     setSelectedPeople(selectedPersonId);
 
@@ -63,7 +63,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
         setDate('');
         setDescription('');
         setPriority('');
-        
+
       } else {
         console.error('Failed to create task');
       }
@@ -164,7 +164,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
             <select
               id="peopleSelect"
               value={selectedPeople}
-              onChange={handlePersonChange}
+              onChange={selectPersons}
               required
               style={{
                 width: '100%',

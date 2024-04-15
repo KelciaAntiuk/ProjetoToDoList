@@ -7,21 +7,20 @@ function TaskCard() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [tasks, setTasks] = useState([]);
 
-  const handleTaskClick = (task) => {
+  const handleTaskEdit = (task) => {
     setSelectedTask(task); // Define o task selecionado quando clicado
   }
 
   useEffect(() => {
     fetchTasks();
-  }, [handleTaskClick, selectedTask]);
+  }, [handleTaskEdit, selectedTask]);
 
   useEffect(() => {
     fetchTasks();
   }, []);
 
  
-
-  const handlePeopleClick = (task) => {
+  const handlePeopleByTeam = (task) => {
     setSelectedPeople(task);
   }
 
@@ -131,7 +130,7 @@ function TaskCard() {
             alignItems: 'center',
             cursor:'pointer'
           }}
-          onClick={() => handleTaskClick(task)}
+          onClick={() => handleTaskEdit(task)}
          >
           <p>
             {task.title}
@@ -182,7 +181,7 @@ function TaskCard() {
               <span
                 onClick={(e) => {
                   e.stopPropagation(); // Evita que o evento se propague para o contêiner pai
-                  handlePeopleClick(task); // Chama handlePeopleClick apenas ao clicar no ícone
+                  handlePeopleByTeam(task); // Chama handlePeopleByTeam apenas ao clicar no ícone
                 }}
               >
                 visibility
