@@ -47,6 +47,10 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
     setSearchQuery(e.target.value);
   };
 
+  const handlePriorityChange = (selectedPriority) => {
+    setPriority(selectedPriority);
+  };
+
   const createTask = async (event) => {
     event.preventDefault();
 
@@ -75,6 +79,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
         setDate('');
         setDescription('');
         setPriority('');
+        setSearchQuery('');
 
       } else {
         console.error('Failed to create task');
@@ -265,25 +270,59 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
             >
               Prioridade:
             </label>
-            <select
-              id="priority"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              required
+            <div
               style={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
+                display: 'flex',
+                justifyContent: 'space-between',
                 marginBottom: '20px',
-                boxSizing: 'border-box',
               }}
             >
-              <option value="">Selecione...</option>
-              <option value="low">Baixa</option>
-              <option value="medium">Média</option>
-              <option value="high">Alta</option>
-            </select>
+              <button
+                type="button"
+                onClick={() => handlePriorityChange('low')}
+                style={{
+                  backgroundColor: priority === 'low' ? '#ccc' : '#fff',
+                  color: priority === 'low' ? '#fff' : '#333',
+                  padding: '12px 20px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  width: '30%',
+                }}
+              >
+                Baixa
+              </button>
+              <button
+                type="button"
+                onClick={() => handlePriorityChange('medium')}
+                style={{
+                  backgroundColor: priority === 'medium' ? '#ccc' : '#fff',
+                  color: priority === 'medium' ? '#fff' : '#333',
+                  padding: '12px 20px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  width: '30%',
+                }}
+              >
+                Média
+              </button>
+              <button
+                type="button"
+                onClick={() => handlePriorityChange('high')}
+                style={{
+                  backgroundColor: priority === 'high' ? '#ccc' : '#fff',
+                  color: priority === 'high' ? '#fff' : '#333',
+                  padding: '12px 20px',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  width: '30%',
+                }}
+              >
+                Alta
+              </button>
+            </div>
             <button
               type="submit"
               style={{
