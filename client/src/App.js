@@ -7,7 +7,7 @@ import TaskCard from './components/TaskCard';
 import NewTaskModal from './components/NewTaskModal';
 import TaskImportante from './components/TaskImportante';
 import Time from './components/Time';
-import './App.css';
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
