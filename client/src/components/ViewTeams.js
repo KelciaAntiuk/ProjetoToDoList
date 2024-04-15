@@ -36,7 +36,6 @@ function ViewTeams({ onClose }) {
     }
   };
 
-
   const updateTeam = async () => {
     try {
       await fetch(`http://localhost:3333/team/${selectedTeam.id}`, {

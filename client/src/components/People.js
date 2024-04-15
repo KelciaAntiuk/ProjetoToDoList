@@ -8,13 +8,6 @@ function People({ tasks, onClose }) {
     fetchPeople();
   }, []);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'short' }); // Retorna o mês abreviado
-    return `${day} ${month}`;
-  };
-
   const fetchPeople = async () => {
     try {
       const response = await fetch('http://localhost:3333/people');

@@ -14,7 +14,6 @@ function Time() {
     setSelectedTeam(team);
   };
 
-
   const fetchTeams = async () => {
     try {
       const response = await fetch('http://localhost:3333/team');

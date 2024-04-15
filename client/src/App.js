@@ -359,7 +359,6 @@ function App() {
       {card && <TaskCard />}
       {importante && <TaskImportante/>}
       {time && <Time/>}
-
     </div >
   );
 }

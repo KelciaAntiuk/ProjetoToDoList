@@ -20,7 +20,7 @@ const updatePeople = async (req, res) =>{
   const {id} = req.params;
   await peopleModels.updatePeople(id, req.body);
   return res.status(204).json();
-}
+};
 
 module.exports = {
   getAll,

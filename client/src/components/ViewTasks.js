@@ -6,7 +6,6 @@ function ViewTasks({ tasks, onClose }) {
   const [editedTitle, setEditedTitle] = useState(tasks.title);
   const [editedDescription, setEditedDescription] = useState(tasks.description);
 
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
