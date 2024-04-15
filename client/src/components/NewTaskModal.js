@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 function NewTaskModal({ showModal, onClose, onAddTask }) {
-
   const [selectedPeople, setSelectedPeople] = useState(0);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
   const [description, setDescription] = useState('');
@@ -9,10 +8,20 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
   const [people, setPeople] = useState([]);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPeople, setFilteredPeople] = useState([]);
 
   useEffect(() => {
     fetchPeople();
   }, []);
+
+  useEffect(() => {
+    // Filtro de pessoas com base na consulta de pesquisa
+    const filtered = people.filter(person =>
+      person.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredPeople(filtered);
+  }, [searchQuery, people]);
 
   const fetchPeople = async () => {
     try {
@@ -34,6 +43,10 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const createTask = async (event) => {
     event.preventDefault();
 
@@ -52,7 +65,6 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
       });
-
 
       if (response.ok) {
         onAddTask(task);
@@ -159,8 +171,23 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
                 marginBottom: '10px'
               }}
             >
-              Selecione a Pessoa:
+              Pesquisar Pessoa:
             </label>
+            <input
+              type="text"
+              id="peopleSearch"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Digite o nome da pessoa"
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                marginBottom: '20px',
+                boxSizing: 'border-box',
+              }}
+            />
             <select
               id="peopleSelect"
               value={selectedPeople}
@@ -175,12 +202,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
                 boxSizing: 'border-box',
               }}
             >
-              <option
-                value={0}
-              >
-                Selecione uma pessoa
-              </option>
-              {people.map((person) => (
+              {filteredPeople.map((person) => (
                 <option
                   key={person.id}
                   value={person.id}
