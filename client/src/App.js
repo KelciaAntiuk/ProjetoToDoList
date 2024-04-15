@@ -38,6 +38,7 @@ function App() {
         return 'black';
     }
   };
+
   const verifyColor2 = (importante) => {
     switch (importante) {
       case true:
@@ -48,7 +49,6 @@ function App() {
         return 'black';
     }
   };
-
 
   const fetchTeam = async () => {
     try {
@@ -74,7 +74,7 @@ function App() {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-  }
+  };
 
   const handleAddTeam = (teamName) => {
     console.log('Novo time adicionado:', teamName);
@@ -85,31 +85,34 @@ function App() {
     console.log('Novo time adicionado:', personName);
     setShowNewPeopleModal(false);
   };
+
   const handleAddTask = (taskName) => {
     console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
     setShowNewTaskModal(false);
     fetchTasks();
   };
 
-
   const handleViewTeams = () => {
     setShowViewTeams(true);
-  }
+  };
+
   const clickCard = () => {
     setCard(false);
     setImportante(true);
     setTime(false);
-  }
+  };
+
   const clickTudo = () => {
     setCard(true);
     setImportante(false);
     setTime(false);
-  }
+  };
+
   const clickTime = () => {
     setCard(false);
     setTime(true);
     setImportante(false);
-  }
+  };
 
   return (
     <div className="App" >

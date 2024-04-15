@@ -131,7 +131,8 @@ function TaskCard() {
             alignItems: 'center',
             cursor:'pointer'
           }}
-          onClick={() => handleTaskClick(task)}>
+          onClick={() => handleTaskClick(task)}
+         >
           <p>
             {task.title}
           </p>
