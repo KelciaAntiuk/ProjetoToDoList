@@ -1,9 +1,12 @@
+
 import Home from "./Home"
+import Cadastro from "./register/Cadastro"
 
 function App() {
   return (
     <div className="Container">
-      <Home />
+      {/* <Home /> */}
+      <Cadastro/>
     </div>
   );
 }
