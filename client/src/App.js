@@ -1,6 +1,6 @@
 
 import Home from "./Home"
-import Cadastro from "./register/Cadastro"
+import Cadastro from "./Cadastro"
 
 function App() {
   return (
