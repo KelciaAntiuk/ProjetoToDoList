@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import * as yup from "yup";
 import { ErrorMessage, Formik, Form, Field } from "formik";
+import bcrypt from 'bcryptjs';
 import Home from './Home';
 
 function App() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
   const handleRegister = async (values) => {
     const { title, empresa, email, password } = values;
-
+  
     try {
-      const user = { title, empresa, email, password };
+      // Criptografar a senha
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const user = { title, empresa, email, password: hashedPassword };
       await fetch('http://localhost:3333/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
-
+  
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
       setTimeout(() => {
@@ -26,6 +29,7 @@ function App() {
       console.error('Error adding people:', error);
     }
   };
+  
 
   const validationsRegister = yup.object().shape({
     email: yup
