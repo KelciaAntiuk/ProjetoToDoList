@@ -9,7 +9,7 @@ import TaskImportante from './components/TaskImportante';
 import Time from './components/Time';
 
 
-function App() {
+function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
@@ -104,7 +104,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="Home">
       <div
         className={`sidebar ${menuOpen ? "open" : ""}`}
         style={{
@@ -363,4 +363,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

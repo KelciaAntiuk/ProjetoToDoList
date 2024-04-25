@@ -1,13 +1,12 @@
-
-import Home from "./Home"
-import Cadastro from "./Cadastro"
+import { Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import MainRoutes from './routes';
 
 function App() {
   return (
-    <div className="Container">
-       {/* <Home />  */}
-      <Cadastro/>
-    </div>
+  <BrowserRouter>
+  <MainRoutes/>
+  </BrowserRouter>
   );
 }
 

@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import bcrypt from 'bcryptjs';
-import Home from './Home';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 
-function App() {
+function Cadastro({ onCadastroCompleto }) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(false);
+  const navigate = useNavigate();
 
+  const handleCadastroCompleto = () => {
+    setShowSuccessMessage(true);
+    onCadastroCompleto();
+  };
+
+  const redirectWithDelay = () => {
+    setTimeout(() => {
+      navigate('/Home');
+    }, 3000);
+  };
 
   const redirectToLogin = () => {
     setIsLoginPage(true);
@@ -18,7 +28,7 @@ function App() {
   const redirectToCadastro = () => {
     setIsLoginPage(false);
   };
- 
+
 
   const handleRegister = async (values) => {
     const { title, empresa, email, password } = values;
@@ -36,9 +46,8 @@ function App() {
 
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
-      setTimeout(() => {
-        window.location.href = './Home';
-      }, 3000); // Redirecionar após 3 segundos
+      redirectWithDelay();
+      handleCadastroCompleto();
     } catch (error) {
       console.error('Error adding people:', error);
     }
@@ -48,35 +57,35 @@ function App() {
     const { email, password } = values;
 
     try {
-        // Buscar os dados do usuário através da requisição
-        const response = await fetch('http://localhost:3333/users');
-        if (!response.ok) {
-            throw new Error('Failed to fetch user data');
-        }
-        const userData = await response.json();
+      // Buscar os dados do usuário através da requisição
+      const response = await fetch('http://localhost:3333/users');
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      const userData = await response.json();
 
-        // Encontrar o usuário com o email fornecido
-        const user = userData.find(user => user.email === email);
+      // Encontrar o usuário com o email fornecido
+      const user = userData.find(user => user.email === email);
 
-        if (!user) {
-            throw new Error('User not found');
-        }
+      if (!user) {
+        throw new Error('User not found');
+      }
 
-        // Comparar a senha fornecida com a senha criptografada do usuário
-        const passwordMatch = await bcrypt.compare(password, user.password);
+      // Comparar a senha fornecida com a senha criptografada do usuário
+      const passwordMatch = await bcrypt.compare(password, user.password);
 
-        if (passwordMatch) {
-            // Senha correta, realizar alguma ação, como redirecionar o usuário
-            console.log('Login bem-sucedido!');
-            
+      if (passwordMatch) {
+        console.log('Login bem-sucedido!');
+        redirectWithDelay();
+        handleCadastroCompleto();
 
-        } else {
-            throw new Error('Incorrect password');
-        }
+      } else {
+        throw new Error('Incorrect password');
+      }
     } catch (error) {
-        console.error('Error logging in:', error.message);
+      console.error('Error logging in:', error.message);
     }
-};
+  };
 
   const validationsRegister = yup.object().shape({
     email: yup
@@ -292,20 +301,20 @@ function App() {
                   </a>
                 </>
               )}
-              {isLoginPage &&(
-                     <>
-                     Não tem cadastro?{' '}
-                     <a
-                       style={{
-                         display: 'flex',
-                         justifyContent: 'center'
-                       }}
-                       href="#" onClick={redirectToCadastro}>
-                       Clique aqui para fazer seu Cadastro!
-                     </a>
-                   </>
+              {isLoginPage && (
+                <>
+                  Não tem cadastro?{' '}
+                  <a
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                    href="#" onClick={redirectToCadastro}>
+                    Clique aqui para fazer seu Cadastro!
+                  </a>
+                </>
               )}
-              
+
             </p>
           </Form>
         </Formik>
@@ -314,4 +323,4 @@ function App() {
   );
 }
 
-export default App;
+export default Cadastro;
