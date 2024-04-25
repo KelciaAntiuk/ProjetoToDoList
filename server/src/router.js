@@ -22,5 +22,6 @@ router.delete('/tasks/:id', taskController.deleteTask);
 router.put('/tasks/:id', taskController.updateTask);
 
 router.post('/users', cadastroController.createCadastro);
+router.get('/users', cadastroController.getAll);
 
 module.exports = router;

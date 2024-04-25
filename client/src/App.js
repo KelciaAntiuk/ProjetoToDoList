@@ -5,7 +5,7 @@ import Cadastro from "./Cadastro"
 function App() {
   return (
     <div className="Container">
-      {/* <Home /> */}
+       {/* <Home />  */}
       <Cadastro/>
     </div>
   );
