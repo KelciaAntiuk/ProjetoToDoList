@@ -7,6 +7,7 @@ import TaskCard from './components/TaskCard';
 import NewTaskModal from './components/NewTaskModal';
 import TaskImportante from './components/TaskImportante';
 import Time from './components/Time';
+import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
   const [importante, setImportante] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [time, setTime] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTeam();
@@ -49,6 +51,11 @@ function Home() {
       console.error('Error fetching team:', error);
     }
   }
+  const redirect = () => {
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
+  };
 
   const fetchTasks = async () => {
     try {
@@ -253,7 +260,8 @@ function Home() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              marginRight:'10px'
             }}
           // onClick={()}
           >
@@ -269,8 +277,56 @@ function Home() {
             >
               Adicionar Task
             </p>
+
+           
+          </div>
+          <div
+            className="perfil"
+            style={{
+              position: 'relative',
+              height: '50px',
+              width: '120px',
+              backgroundColor: 'white',
+              borderRadius: '30px',
+              marginLeft: '10px',
+              cursor: 'pointer',
+              fontFamily: 'Rajdhani, sans-serif', // Adicionando a fonte fornecida
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer'
+            }}
+          // onClick={()}
+          >
+            <p
+              style={{
+                color: 'black',
+                fontSize: '16px',
+                fontWeight: '500',
+                margin: 0,
+                color: 'purple' // Removendo margem padrão do parágrafo
+              }}
+              onClick={() => redirect()}
+            >
+             Logout
+            </p>
+
+           
           </div>
         </div>
+
+        <div
+            className="button-container"
+            style={{
+              display: 'flex',
+              marginLeft: 'auto',
+              marginRight: '20px',
+            }}
+          >
+          </div>
+
+          
+     
 
         <NewTeamModal
           showModal={showNewTeamModal}
@@ -327,7 +383,7 @@ function Home() {
             marginRight: '27px',
             color: 'purple',
             borderBottom: verifyColor(card),
-            cursor:'pointer'
+            cursor: 'pointer'
           }}
           onClick={() => clickTudo()}
         >
@@ -337,9 +393,9 @@ function Home() {
           style={{
             color: 'purple',
             borderBottom: verifyColor(importante),
-            cursor:'pointer'
+            cursor: 'pointer'
           }}
-          onClick={()=> clickCard()}
+          onClick={() => clickCard()}
         >
           Importante
         </p>
@@ -348,17 +404,23 @@ function Home() {
           style={{
             color: 'purple',
             borderBottom: verifyColor(time),
-            cursor:'pointer',
+            cursor: 'pointer',
             marginLeft: '27px'
           }}
-          onClick={()=> clickTime()}
+          onClick={() => clickTime()}
         >
           Times
         </p>
       </div>
-      {card && <TaskCard />}
-      {importante && <TaskImportante/>}
-      {time && <Time/>}
+      {card &&
+        <TaskCard />
+      }
+      {importante &&
+        <TaskImportante />
+      }
+      {time &&
+        <Time />
+      }
     </div >
   );
 }

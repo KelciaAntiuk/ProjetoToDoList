@@ -4,11 +4,10 @@ import { ErrorMessage, Formik, Form, Field } from "formik";
 import bcrypt from 'bcryptjs';
 import { useNavigate } from "react-router-dom";
 
-
-
 function Cadastro({ onCadastroCompleto }) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleCadastroCompleto = () => {
@@ -43,6 +42,9 @@ function Cadastro({ onCadastroCompleto }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
+      if(email === user.email ){
+        console.log('usuário existente')
+      }
 
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
@@ -68,6 +70,8 @@ function Cadastro({ onCadastroCompleto }) {
       const user = userData.find(user => user.email === email);
 
       if (!user) {
+        
+        setError(true);
         throw new Error('User not found');
       }
 
@@ -80,12 +84,14 @@ function Cadastro({ onCadastroCompleto }) {
         handleCadastroCompleto();
 
       } else {
-        throw new Error('Incorrect password');
+        // Utilize ErrorMessage para mostrar o erro ao cliente
+          setError(true);   
       }
     } catch (error) {
       console.error('Error logging in:', error.message);
     }
   };
+ 
 
   const validationsRegister = yup.object().shape({
     email: yup
@@ -219,6 +225,20 @@ function Cadastro({ onCadastroCompleto }) {
                 marginBottom: '20px'
               }}
             >
+               {error && isLoginPage && !showSuccessMessage && (
+                
+                <>
+                  <a
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      color:'red'
+                    }}>
+                      
+                    Senha ou usuário incorretos
+                  </a>
+                </>
+              )}
               <Field
                 name="email"
                 type="email"
@@ -264,6 +284,7 @@ function Cadastro({ onCadastroCompleto }) {
                   fontSize: '12px'
                 }}
               />
+             
             </div>
 
             <button

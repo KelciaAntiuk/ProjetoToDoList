@@ -12,7 +12,8 @@ function MainRoutes() {
 
   return (
     <Routes>
-      <Route path='/'
+      <Route 
+      path='/'
         element=
         {
           <Cadastro
@@ -21,7 +22,6 @@ function MainRoutes() {
         }
       />
       <Route
-
         path="/Home"
         element={
           isCadastroCompleto ?
@@ -30,6 +30,7 @@ function MainRoutes() {
             />
         }
       />
+   
       
     </Routes>
   );
