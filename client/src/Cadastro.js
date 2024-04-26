@@ -98,7 +98,6 @@ function Cadastro({ onCadastroCompleto }) {
         handleCadastroCompleto();
 
       } else {
-        // Utilize ErrorMessage para mostrar o erro ao cliente
         setError(true);
       }
     } catch (error) {
