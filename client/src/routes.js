@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router";
+import React, { useState } from "react";
 import Cadastro from './Cadastro';
 import Home from "./Home";
 
@@ -30,8 +30,6 @@ function MainRoutes() {
             />
         }
       />
-   
-      
     </Routes>
   );
 }

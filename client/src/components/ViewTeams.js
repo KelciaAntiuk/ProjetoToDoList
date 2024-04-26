@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 function ViewTeams({ onClose }) {
-  const [teams, setTeams] = useState([]);
+  const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [editPerson, setEditPerson] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [people, setPeople] = useState([]);
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const [editPerson, setEditPerson] = useState("");
+  const [teams, setTeams] = useState([]);
 
   useEffect(() => {
     fetchPeople();
@@ -153,7 +153,7 @@ function ViewTeams({ onClose }) {
                 marginBottom: '10px',
                 cursor: 'pointer'
               }}
-             // onClick={() => handleTeamClick(team)}
+            // onClick={() => handleTeamClick(team)}
             >
               {team.title}
               <p
@@ -276,9 +276,9 @@ function ViewTeams({ onClose }) {
                                 handleEditClickPerson(person); // Chama handlePeopleClick apenas ao clicar no ícone
                               }}
                             >
-                               edit
+                              edit
                             </span>
-                           
+
                           </p>
                         </>
                       )}

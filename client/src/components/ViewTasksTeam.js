@@ -5,7 +5,7 @@ function ViewDetails({ team, onClose }) {
 
   useEffect(() => {
     fetchTasks();
-  }, []); // Chama fetchTasks() uma vez quando o componente é montado
+  }, []); 
 
   const fetchTasks = async () => {
     try {

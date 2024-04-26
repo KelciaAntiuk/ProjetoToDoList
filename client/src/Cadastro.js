@@ -9,14 +9,12 @@ function Cadastro({ onCadastroCompleto }) {
   const [isLoginPage, setIsLoginPage] = useState(false);
   const [error, setError] = useState(false);
   const [errorCd, setErrorCd] = useState(false);
-  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const handleCadastroCompleto = () => {
     setShowSuccessMessage(true);
     onCadastroCompleto();
   };
-
 
   const redirectWithDelay = () => {
     setTimeout(() => {
@@ -39,7 +37,6 @@ function Cadastro({ onCadastroCompleto }) {
 
       const response = await fetch(`http://localhost:3333/users`);
       const userData = await response.json();
-
       const userWithEmail = userData.find(user => user.email === email);
 
       if (userWithEmail) {
@@ -151,6 +148,7 @@ function Cadastro({ onCadastroCompleto }) {
         backgroundColor: '#f9f9f9'
       }}
       >
+        
         <h1
           style={{
             textAlign: 'center'
@@ -262,7 +260,7 @@ function Cadastro({ onCadastroCompleto }) {
                       color: 'red'
                     }}>
 
-                    Senha ou usuário incorretos
+                    Usuário ou senha incorretos
                   </a>
                 </>
               )}

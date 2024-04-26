@@ -5,7 +5,6 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
   const [selectedTeam, setSelectedTeam] = useState(0);
   const [peopleName, setPeopleName] = useState('');
   
-
   useEffect(() => {
     console.log('peoplemodal', teams);
   }, []);

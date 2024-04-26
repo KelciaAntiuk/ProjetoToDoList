@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function NewTaskModal({ showModal, onClose, onAddTask }) {
+  const [filteredPeople, setFilteredPeople] = useState([]);
   const [selectedPeople, setSelectedPeople] = useState(0);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
   const [description, setDescription] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [priority, setPriority] = useState('');
   const [people, setPeople] = useState([]);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredPeople, setFilteredPeople] = useState([]);
-
+  
   useEffect(() => {
     fetchPeople();
   }, []);

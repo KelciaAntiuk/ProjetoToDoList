@@ -1,33 +1,30 @@
 
-import React, { useState, useEffect } from 'react';
-import NewTeamModal from './components/NewTeamModal';
+import TaskImportante from './components/TaskImportante';
 import NewPeopleModal from './components/NewPeopleModal';
+import NewTaskModal from './components/NewTaskModal';
+import NewTeamModal from './components/NewTeamModal';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ViewTeams from './components/ViewTeams';
 import TaskCard from './components/TaskCard';
-import NewTaskModal from './components/NewTaskModal';
-import TaskImportante from './components/TaskImportante';
 import Time from './components/Time';
-import { useNavigate } from 'react-router-dom';
-
 
 function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
+  const [showNewTeamModal, setShowNewTeamModal] = useState(false);
   const [showNewTaskModal, setShowNewTaskModal] = useState(false);
-  const [teams, setTeams] = useState([]);
   const [showViewTeams, setShowViewTeams] = useState(false);
-  const [people, setPeople] = useState([]);
-  const [card, setCard] = useState(true);
   const [importante, setImportante] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [people, setPeople] = useState([]);
   const [time, setTime] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [card, setCard] = useState(true);
+  const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchTeam();
-    // fetchPeople();
-    console.log('APP', teams);
   }, []);
 
   const verifyColor = (card) => {
@@ -46,11 +43,11 @@ function Home() {
       const response = await fetch('http://localhost:3333/team');
       const teams = await response.json();
       setTeams(teams);
-      console.log(teams);
     } catch (error) {
       console.error('Error fetching team:', error);
     }
-  }
+  };
+
   const redirect = () => {
     setTimeout(() => {
       navigate('/');
@@ -62,28 +59,24 @@ function Home() {
       const response = await fetch('http://localhost:3333/tasks');
       const tasks = await response.json();
       setTasks(tasks);
-      console.log(tasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     }
-  }
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleAddTeam = (teamName) => {
-    console.log('Novo time adicionado:', teamName);
     setShowNewTeamModal(false);
   };
 
   const handleAddPeople = (personName) => {
-    console.log('Novo time adicionado:', personName);
     setShowNewPeopleModal(false);
   };
 
   const handleAddTask = (taskName) => {
-    console.log('Nova tarefa adicionada:', taskName); // Corrigido para "Nova tarefa adicionada"
     setShowNewTaskModal(false);
     fetchTasks();
   };
@@ -261,7 +254,7 @@ function Home() {
               justifyContent: 'center',
               alignItems: 'center',
               cursor: 'pointer',
-              marginRight:'10px'
+              marginRight: '10px'
             }}
           // onClick={()}
           >
@@ -278,7 +271,7 @@ function Home() {
               Adicionar Task
             </p>
 
-           
+
           </div>
           <div
             className="perfil"
@@ -308,25 +301,25 @@ function Home() {
               }}
               onClick={() => redirect()}
             >
-             Logout
+              Logout
             </p>
 
-           
+
           </div>
         </div>
 
         <div
-            className="button-container"
-            style={{
-              display: 'flex',
-              marginLeft: 'auto',
-              marginRight: '20px',
-            }}
-          >
-          </div>
+          className="button-container"
+          style={{
+            display: 'flex',
+            marginLeft: 'auto',
+            marginRight: '20px',
+          }}
+        >
+        </div>
 
-          
-     
+
+
 
         <NewTeamModal
           showModal={showNewTeamModal}
