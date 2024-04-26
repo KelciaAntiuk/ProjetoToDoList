@@ -42,9 +42,7 @@ function Cadastro({ onCadastroCompleto }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
-      if(email === user.email ){
-        console.log('usuário existente')
-      }
+     
 
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
