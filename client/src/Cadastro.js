@@ -8,12 +8,15 @@ function Cadastro({ onCadastroCompleto }) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(false);
   const [error, setError] = useState(false);
+  const [errorCd, setErrorCd] = useState(false);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const handleCadastroCompleto = () => {
     setShowSuccessMessage(true);
     onCadastroCompleto();
   };
+
 
   const redirectWithDelay = () => {
     setTimeout(() => {
@@ -33,16 +36,28 @@ function Cadastro({ onCadastroCompleto }) {
     const { title, empresa, email, password } = values;
 
     try {
+
+      const response = await fetch(`http://localhost:3333/users`);
+      const userData = await response.json();
+
+      const userWithEmail = userData.find(user => user.email === email);
+
+      if (userWithEmail) {
+        // Usuário já cadastrado
+        setErrorCd(true);
+        return;
+      }
+
       // Criptografar a senha
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = { title, empresa, email, password: hashedPassword };
+
       await fetch('http://localhost:3333/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
       });
-     
 
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
@@ -52,6 +67,7 @@ function Cadastro({ onCadastroCompleto }) {
       console.error('Error adding people:', error);
     }
   };
+
 
   const handleLogin = async (values) => {
     const { email, password } = values;
@@ -68,7 +84,7 @@ function Cadastro({ onCadastroCompleto }) {
       const user = userData.find(user => user.email === email);
 
       if (!user) {
-        
+
         setError(true);
         throw new Error('User not found');
       }
@@ -83,13 +99,13 @@ function Cadastro({ onCadastroCompleto }) {
 
       } else {
         // Utilize ErrorMessage para mostrar o erro ao cliente
-          setError(true);   
+        setError(true);
       }
     } catch (error) {
       console.error('Error logging in:', error.message);
     }
   };
- 
+
 
   const validationsRegister = yup.object().shape({
     email: yup
@@ -164,6 +180,20 @@ function Cadastro({ onCadastroCompleto }) {
                 Cadastrado com sucesso!
               </div>
             )}
+            {errorCd && !showSuccessMessage && (
+
+              <>
+                <a
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    color: 'red'
+                  }}>
+
+                  Usuário existente
+                </a>
+              </>
+            )}
 
             {!isLoginPage && (
               <>
@@ -223,16 +253,16 @@ function Cadastro({ onCadastroCompleto }) {
                 marginBottom: '20px'
               }}
             >
-               {error && isLoginPage && !showSuccessMessage && (
-                
+              {error && isLoginPage && !showSuccessMessage && (
+
                 <>
                   <a
                     style={{
                       display: 'flex',
                       justifyContent: 'center',
-                      color:'red'
+                      color: 'red'
                     }}>
-                      
+
                     Senha ou usuário incorretos
                   </a>
                 </>
@@ -282,7 +312,7 @@ function Cadastro({ onCadastroCompleto }) {
                   fontSize: '12px'
                 }}
               />
-             
+
             </div>
 
             <button
