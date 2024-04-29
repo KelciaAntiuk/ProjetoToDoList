@@ -335,21 +335,38 @@ function Cadastro({ onCadastroCompleto }) {
               }}
             >
               {!isLoginPage && (
-                <>
-                  Já tem cadastro?{' '}
+                <div>
+                <div
+                style={{
+                  display:'flex',
+                  justifyContent:'center',
+                  marginBottom:'10px'
+                }}>
+                Já tem cadastro?{' '}
+                </div>
+                  <div>
                   <a
                     style={{
                       display: 'flex',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                    
                     }}
                     href="#" onClick={redirectToLogin}>
                     Clique aqui para fazer login!
                   </a>
-                </>
+                  </div>
+                </div>
               )}
               {isLoginPage && (
-                <>
+                <div>
+                  <div
+                  style={{
+                    display:'flex',
+                    justifyContent:'center'
+                  }}>
                   Não tem cadastro?{' '}
+                  </div>
+                  <div>
                   <a
                     style={{
                       display: 'flex',
@@ -358,7 +375,8 @@ function Cadastro({ onCadastroCompleto }) {
                     href="#" onClick={redirectToCadastro}>
                     Clique aqui para fazer seu Cadastro!
                   </a>
-                </>
+                  </div>
+                </div>
               )}
 
             </p>
