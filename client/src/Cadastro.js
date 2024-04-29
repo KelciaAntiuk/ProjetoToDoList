@@ -97,6 +97,12 @@ function Cadastro({ onCadastroCompleto }) {
       } else {
         setError(true);
       }
+
+      // const userDetails = await response.json();
+      // const userName = userDetails.title; // Supondo que o nome do usuário esteja disponível na resposta como "name"
+      // // Depois de obter os detalhes do usuário, redirecione para a página inicial
+      // navigate('/home', { state: { userName: userName } });
+      // console.log('oi', userName)
     } catch (error) {
       console.error('Error logging in:', error.message);
     }
@@ -136,22 +142,27 @@ function Cadastro({ onCadastroCompleto }) {
       justifyContent: 'center',
       alignItems: 'center',
       height: '100vh',
-
-    }}
-    >
+      backgroundColor: 'rgba(128, 128, 128, 0.5)', // Cor cinza com 50% de opacidade
+      backgroundImage: 'url("https://getwallpapers.com/wallpaper/full/f/3/9/1109114-free-download-purple-wallpaper-for-computer-2880x1800-for-pc.jpg")', // Substitua o caminho pela URL da sua imagem
+      backgroundSize: 'cover', // Para cobrir todo o elemento com a imagem
+      backgroundPosition: 'center' // Para centralizar a imagem dentro do elemento
+    }}>
       <div style={{
         width: '300px',
         padding: '50px',
         border: '1px solid #ccc',
         borderRadius: '10px',
         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#f9f9f9'
+        backgroundColor: 'rgb(80, 20, 73, 0.5)'
       }}
       >
         
         <h1
           style={{
-            textAlign: 'center'
+            textAlign: 'center',
+            color:'white',
+            fontSize:'40px',
+            marginTop:'-10px'
           }}
         >
           {isLoginPage ? 'Login' : 'Cadastro'}
@@ -168,13 +179,13 @@ function Cadastro({ onCadastroCompleto }) {
             {showSuccessMessage && (
               <div
                 style={{
-                  color: 'green',
+                  color: 'light-green',
                   fontSize: '16px',
                   marginBottom: '20px',
                   textAlign: 'center'
                 }}
               >
-                Cadastrado com sucesso!
+                Sucesso!
               </div>
             )}
             {errorCd && !showSuccessMessage && (
@@ -309,16 +320,15 @@ function Cadastro({ onCadastroCompleto }) {
                   fontSize: '12px'
                 }}
               />
-
             </div>
 
             <button
               style={{
-                width: '100%',
+                width: '107%',
                 padding: '10px',
                 border: 'none',
                 borderRadius: '5px',
-                backgroundColor: '#007bff',
+                backgroundColor: 'rgb(81 23 74)',
                 color: '#fff',
                 fontSize: '16px',
                 cursor: 'pointer',
@@ -340,7 +350,9 @@ function Cadastro({ onCadastroCompleto }) {
                 style={{
                   display:'flex',
                   justifyContent:'center',
-                  marginBottom:'10px'
+                  marginBottom:'10px',
+                  color:'white',
+                  
                 }}>
                 Já tem cadastro?{' '}
                 </div>
@@ -349,9 +361,12 @@ function Cadastro({ onCadastroCompleto }) {
                     style={{
                       display: 'flex',
                       justifyContent: 'center',
+                      color:'white',
+                      textDecoration: 'underline' ,
+                      cursor:'pointer'
                     
                     }}
-                    href="#" onClick={redirectToLogin}>
+                     onClick={redirectToLogin}>
                     Clique aqui para fazer login!
                   </a>
                   </div>
@@ -362,7 +377,9 @@ function Cadastro({ onCadastroCompleto }) {
                   <div
                   style={{
                     display:'flex',
-                    justifyContent:'center'
+                    justifyContent:'center',
+                    color:'white',
+                 
                   }}>
                   Não tem cadastro?{' '}
                   </div>
@@ -370,9 +387,13 @@ function Cadastro({ onCadastroCompleto }) {
                   <a
                     style={{
                       display: 'flex',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      color: 'white',
+                      textDecoration: 'underline' ,
+                      cursor:'pointer'
+                      
                     }}
-                    href="#" onClick={redirectToCadastro}>
+                    onClick={redirectToCadastro}>
                     Clique aqui para fazer seu Cadastro!
                   </a>
                   </div>
