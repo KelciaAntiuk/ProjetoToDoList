@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ViewTeams({ onClose }) {
+function ViewTeams({ onClose, userName }) {
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [editPerson, setEditPerson] = useState("");
@@ -143,7 +143,10 @@ function ViewTeams({ onClose }) {
             padding: '0'
           }}
         >
-          {teams.map((team) => (
+          {teams
+          .filter(team => team.user === userName)
+          .map((team) => (
+            
             <li
               key={team.id}
               style={{
@@ -151,23 +154,26 @@ function ViewTeams({ onClose }) {
                 backgroundColor: '#f0f0f0',
                 borderRadius: '4px',
                 marginBottom: '10px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                marginLeft:'10px'
               }}
             // onClick={() => handleTeamClick(team)}
             >
-              {team.title}
-              <p
+               <a
                 style={{
                   marginRight: '65em',
                   marginTop: '-1em',
                   fontFamily: 'Material Symbols Outlined',
                   fontSize: '20px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  marginRight:'20px'
                 }}
                 onClick={() => handleEditClick(team)}
               >
                 edit
-              </p>
+              </a>
+              {team.title}
+             
             </li>
           ))}
         </ul>
@@ -260,7 +266,9 @@ function ViewTeams({ onClose }) {
                         </div>
                       ) : (
                         <>
-                          <span>{person.title}</span>
+                          <span style={{
+                            marginLeft:'20px'
+                          }}>{person.title}</span>
                           <p
                             style={{
                               marginRight: '65em',

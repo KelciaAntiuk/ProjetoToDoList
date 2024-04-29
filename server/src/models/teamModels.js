@@ -8,13 +8,13 @@ const getAll = async () => {
 
 const createTeam = async (team) => { //Recebemos uma team e vamos 'pegar ela
 
-  const  { title } = team; 
+  const  { title, user } = team; 
   //Aqui 'abrimos' a team e ent 'pegamos' o title, 
   //porque não recebo o status? porque toda team já começará com Status:pendente
 
-  const code = 'INSERT INTO team(title) VALUES (?)';
+  const code = 'INSERT INTO team(title, user) VALUES (?, ?)';
 
-  const [ createdTeam] = await connection.execute(code , [title]);
+  const [ createdTeam] = await connection.execute(code , [title, user]);
 
   //no banco de dados datas devem ser salvas em UTC:
   //const dateUTC = new Date(Date.now()).toUTCstring();

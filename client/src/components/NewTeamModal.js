@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-function AddNewTeamModal({ showModal, onClose, onAddTeam }) {
+function AddNewTeamModal({ showModal, onClose, onAddTeam, userName }) {
 
   const [teamName, setTeamName] = useState('');
 
   const addTeam = async (event) => {
     event.preventDefault(); //evitar que a pagina seja recarregada apos o envio do formulário
     try {
-      const team = { title: teamName };
+      const team = { title: teamName, user: userName };
       const response = await fetch('http://localhost:3333/team', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

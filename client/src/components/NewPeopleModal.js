@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
+function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams, userName }) {
   
   const [selectedTeam, setSelectedTeam] = useState(0);
   const [peopleName, setPeopleName] = useState('');
@@ -16,7 +16,7 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
     try {
       // Converte selectedTeam para um número inteiro
       const teamId = parseInt(selectedTeam, 10);
-      const people = { title: peopleName, team_id: teamId };
+      const people = { title: peopleName, team_id: teamId, user: userName };
 
       await fetch('http://localhost:3333/people', {
         method: 'POST',
@@ -137,7 +137,9 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams }) {
               }}
             >
               <option value={0}>Selecione um time</option> 
-              {teams.map((team) => (
+              {teams
+              .filter(team => team.user === userName)
+              .map((team) => (
                 <option key={team.id} value={team.id} >
                   {team.title}
                 </option>

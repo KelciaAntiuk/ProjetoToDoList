@@ -9,18 +9,15 @@ function Cadastro({ onCadastroCompleto }) {
   const [isLoginPage, setIsLoginPage] = useState(false);
   const [error, setError] = useState(false);
   const [errorCd, setErrorCd] = useState(false);
+  const [userName, setUserName] =('');
   const navigate = useNavigate();
 
-  const handleCadastroCompleto = () => {
+  const handleCadastroCompleto = (userName) => {
     setShowSuccessMessage(true);
-    onCadastroCompleto();
+    onCadastroCompleto(userName); // Passa o userName para onCadastroCompleto
   };
 
-  const redirectWithDelay = () => {
-    setTimeout(() => {
-      navigate('/Home');
-    }, 3000);
-  };
+ 
 
   const redirectToLogin = () => {
     setIsLoginPage(true);
@@ -65,48 +62,44 @@ function Cadastro({ onCadastroCompleto }) {
     }
   };
 
-
   const handleLogin = async (values) => {
     const { email, password } = values;
-
+  
     try {
-      // Buscar os dados do usuário através da requisição
       const response = await fetch('http://localhost:3333/users');
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
       const userData = await response.json();
-
-      // Encontrar o usuário com o email fornecido
       const user = userData.find(user => user.email === email);
-
+  
       if (!user) {
-
         setError(true);
         throw new Error('User not found');
       }
-
-      // Comparar a senha fornecida com a senha criptografada do usuário
+  
       const passwordMatch = await bcrypt.compare(password, user.password);
-
+  
       if (passwordMatch) {
-        console.log('Login bem-sucedido!');
-        redirectWithDelay();
-        handleCadastroCompleto();
 
+        // Redirecionar para outra página após o login
+        redirectWithDelay(user.id);
+        handleCadastroCompleto();
       } else {
         setError(true);
       }
-
-      // const userDetails = await response.json();
-      // const userName = userDetails.title; // Supondo que o nome do usuário esteja disponível na resposta como "name"
-      // // Depois de obter os detalhes do usuário, redirecione para a página inicial
-      // navigate('/home', { state: { userName: userName } });
-      // console.log('oi', userName)
     } catch (error) {
       console.error('Error logging in:', error.message);
     }
   };
+  
+  const redirectWithDelay = (userName) => {
+    setTimeout(() => {
+      navigate('/Home', { state: { userName: userName } });
+      console.log('username', userName)
+    }, 3000);
+  };
+
 
 
   const validationsRegister = yup.object().shape({

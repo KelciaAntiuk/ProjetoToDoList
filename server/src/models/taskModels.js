@@ -6,10 +6,10 @@ const getAll = async () => {
 };
 
 const createTask = async (task) => {
-  const { title, description, priority, people_id, team_id, date } = task;
+  const { title, description, priority, people_id, team_id, date, user } = task;
   const status = 'pendente'; // Defina o status como "pendente"
-  const code = 'INSERT INTO tasks (title, description, priority, people_id, team_id, date, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  const [createdTask] = await connection.execute(code, [title, description, priority, people_id, team_id, date, status]);
+  const code = 'INSERT INTO tasks (title, description, priority, people_id, team_id, date, status, user) VALUES (?, ?, ?, ?, ?, ?, ?,?)';
+  const [createdTask] = await connection.execute(code, [title, description, priority, people_id, team_id, date, status, user]);
   return { insertId: createdTask.insertId };
 };
 
@@ -19,9 +19,9 @@ const deleteTask = async (id) => {
 };
  
 const updateTask = async (id, task) => {
-  const { title, description, priority, people_id, team_id, date, status } = task;
-  const code = 'UPDATE tasks SET title = ?, description = ?, priority = ?, people_id = ?, team_id = ?, date = ?, status = ? WHERE id = ?';
-  await connection.execute(code, [title, description, priority, people_id, team_id, date, status, id]);
+  const { title, description, priority, people_id, team_id, date, status, user } = task;
+  const code = 'UPDATE tasks SET title = ?, description = ?, priority = ?, people_id = ?, team_id = ?, date = ?, status = ?, user = ? WHERE id = ?';
+  await connection.execute(code, [title, description, priority, people_id, team_id, date, status, user, id]);
 };
 
 

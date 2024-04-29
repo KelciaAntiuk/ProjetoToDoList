@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ViewTasks from './ViewTasks';
 import People from './People';
 
-function TaskCard() {
+function TaskCard({userName}) {
   const [selectedPeople, setSelectedPeople] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
   const [tasks, setTasks] = useState([]);
@@ -112,7 +112,9 @@ function TaskCard() {
         </div>
       </div>
 
-      {tasks.map(task => (
+      {tasks
+      .filter(task => task.user === userName)
+      .map(task => (
         task.priority === 'high' && (
           <div
             key={task.id}

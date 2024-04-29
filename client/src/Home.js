@@ -4,10 +4,11 @@ import NewPeopleModal from './components/NewPeopleModal';
 import NewTaskModal from './components/NewTaskModal';
 import NewTeamModal from './components/NewTeamModal';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ViewTeams from './components/ViewTeams';
 import TaskCard from './components/TaskCard';
 import Time from './components/Time';
+
 
 function Home() {
   const [showNewPeopleModal, setShowNewPeopleModal] = useState(false);
@@ -21,11 +22,33 @@ function Home() {
   const [teams, setTeams] = useState([]);
   const [card, setCard] = useState(true);
   const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const userName = location.state && location.state.userName;
+
 
   useEffect(() => {
     fetchTeam();
+    fetchUsers();
+
   }, []);
+
+
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:3333/users');
+      if (!response.ok) {
+        throw new Error('Failed to fetch tasks');
+      }
+
+      const usersData = await response.json();
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Error fetching tasks:', error.message);
+    }
+  };
 
   const verifyColor = (card) => {
     switch (card) {
@@ -43,6 +66,7 @@ function Home() {
       const response = await fetch('http://localhost:3333/team');
       const teams = await response.json();
       setTeams(teams);
+      console.log('pessoaHomeee', userName)
     } catch (error) {
       console.error('Error fetching team:', error);
     }
@@ -224,9 +248,31 @@ function Home() {
               fontSize: "40px",
               fontFamily: "Abril Fatface",
               marginLeft: "10px",
+
             }}
           >
-            ToDo List
+            ToDo List {users
+              .filter(user => user.id === userName)
+              .map(user => (
+                <div key={user.id}
+                style={{
+                  marginTop:'-0.6em'
+                }}>
+                  <a
+                    style={{
+                      fontSize: '12px',
+                     
+                    }}
+                  >
+                    Bem vindo(a), {user.title}
+                  </a>
+                </div>
+              ))
+            }
+
+
+
+
           </div>
 
           <div
@@ -325,6 +371,7 @@ function Home() {
           showModal={showNewTeamModal}
           onClose={() => setShowNewTeamModal(false)}
           onAddTeam={handleAddTeam}
+          userName={userName}
           style={{
             position: 'fixed',
             top: 0,
@@ -339,16 +386,19 @@ function Home() {
           onClose={() => setShowNewPeopleModal(false)}
           onAddPerson={handleAddPeople}
           teams={teams}
+          userName={userName}
         />
         <NewTaskModal
           showModal={showNewTaskModal}
           onClose={() => setShowNewTaskModal(false)}
           onAddTask={handleAddTask}
           people={people}
+          userName={userName}
         />
         {showViewTeams &&
           <ViewTeams
             onClose={() => setShowViewTeams(false)}
+            userName={userName}
           />
         }
       </div>
@@ -404,16 +454,18 @@ function Home() {
         >
           Times
         </p>
+
       </div>
       {card &&
-        <TaskCard />
+        <TaskCard userName={userName} />
       }
       {importante &&
-        <TaskImportante />
+        <TaskImportante userName={userName} />
       }
       {time &&
-        <Time />
+        <Time userName={userName} />
       }
+
     </div >
   );
 }

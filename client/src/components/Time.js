@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ViewTasksTeam from './ViewTasksTeam';
 
-function Time() {
+function Time({userName}) {
   const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
@@ -43,7 +43,10 @@ function Time() {
       
       </div>
 
-      {teams.map(team => (
+      {teams
+      .filter(team => team.user === userName)
+      .map(team => (
+
         <div
           key={team.id}
           style={{

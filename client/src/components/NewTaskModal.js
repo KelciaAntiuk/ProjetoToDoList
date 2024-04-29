@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function NewTaskModal({ showModal, onClose, onAddTask }) {
+function NewTaskModal({ showModal, onClose, onAddTask, userName }) {
   const [filteredPeople, setFilteredPeople] = useState([]);
   const [selectedPeople, setSelectedPeople] = useState(0);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
@@ -13,6 +13,7 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
   
   useEffect(() => {
     fetchPeople();
+    console.log('userNEWTASK', userName);
   }, []);
 
   useEffect(() => {
@@ -61,7 +62,8 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
         people_id: selectedPeople,
         date: date,
         description: description,
-        priority: priority
+        priority: priority,
+        user: userName
       };
 
       const response = await fetch('http://localhost:3333/tasks', {
@@ -207,7 +209,9 @@ function NewTaskModal({ showModal, onClose, onAddTask }) {
                 boxSizing: 'border-box',
               }}
             >
-              {filteredPeople.map((person) => (
+              {filteredPeople
+              .filter(person => person.user === userName)
+              .map((person) => (
                 <option
                   key={person.id}
                   value={person.id}
