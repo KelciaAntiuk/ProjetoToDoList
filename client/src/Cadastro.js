@@ -175,7 +175,8 @@ function Cadastro({ onCadastroCompleto }) {
                   color: 'light-green',
                   fontSize: '16px',
                   marginBottom: '20px',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  color:'rgb(176, 242, 194)'
                 }}
               >
                 Sucesso!
@@ -191,7 +192,7 @@ function Cadastro({ onCadastroCompleto }) {
                     color: 'red'
                   }}>
 
-                  Usuário existente
+                  Usuário existente!
                 </a>
               </>
             )}
