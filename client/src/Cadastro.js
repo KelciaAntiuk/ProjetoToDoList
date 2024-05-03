@@ -55,7 +55,7 @@ function Cadastro({ onCadastroCompleto }) {
 
       setShowSuccessMessage(true);
       // Redirecionar para outra página após o cadastro
-      redirectWithDelay();
+      redirectToLogin();
       handleCadastroCompleto();
     } catch (error) {
       console.error('Error adding people:', error);
@@ -388,7 +388,7 @@ function Cadastro({ onCadastroCompleto }) {
                       
                     }}
                     onClick={redirectToCadastro}>
-                    Clique aqui para fazer seu Cadastro!
+                    Clique aqui para fazer seu Cadastro! 
                   </a>
                   </div>
                 </div>

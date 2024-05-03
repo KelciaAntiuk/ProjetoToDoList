@@ -6,8 +6,9 @@ function AddNewPeopleModal({ showModal, onClose, onAddPeople, teams, userName })
   const [peopleName, setPeopleName] = useState('');
   
   useEffect(() => {
-    console.log('peoplemodal', teams);
+   
   }, []);
+  
 
   const addPeople = async (event) => {
     event.preventDefault();

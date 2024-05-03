@@ -126,7 +126,7 @@ function TaskCard({ userName }) {
           <div
             key={task.id}
             style={{
-              border: '1px solid black',
+              border: '1px solid #0c6052',
               borderRadius: '5px',
               margin: '1rem',
               padding: '1rem',
